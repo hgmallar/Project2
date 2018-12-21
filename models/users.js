@@ -20,3 +20,4 @@ module.exports = function(sequelize, DataTypes) {
   });
   return User;
 };
+//this is the user's model!
