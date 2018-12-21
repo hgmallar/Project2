@@ -1,21 +1,21 @@
 <div id="home">
   <div class="container">
 
-<!-- start -->
+    <!-- start -->
 
-  <div class="form-group colgit ">
+    <div class="form-group colgit ">
       <label for="inputEmail3" class="col-sm-2 col-form-label">Sign In!</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="inputUsername" placeholder="Username">
       </div>
-  
-      
+
+
       <div class="col-sm-10">
         <input type="email" class="form-control" id="inputPassword" placeholder="Password">
       </div>
     </div>
 
-<!-- end -->
+    <!-- end -->
 
 
 
@@ -36,9 +36,9 @@
         </form>
         <h3>Excellent:</h3>
         <ul id="example-list" class="list-group">
-          {{#each examples}}
+          {{#each users}}
           <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
+            <a href="example/{{this.id}}">{{this.username}}</a>
             <button class="btn btn-danger float-right delete">ｘ</button>
           </li>
           {{/each}}
@@ -46,11 +46,70 @@
       </div>
     </div>
   </div>
-</div>
 
-<canvas id="myChart" width="400" height="400"></canvas>
+</div>
+<canvas class="mx-auto" id="myChart" width="300" height="300"></canvas>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
-<script type="text/javascript" src="/js/graph.js"></script>
+
+//chart.js horizontal bar graph
+<script>
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    title: {
+      fontsize: 60
+    },
+    data: {
+      labels: [
+        {{#each leaders}} 
+           "{{this}}",
+        {{/ each}}
+      ],
+  datasets: [{
+    label: '# of Votes',
+    data: [{{ data }}],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)'
+    ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)'
+      ],
+        borderWidth: 1
+      }]
+    },
+  options: {
+    legend: {
+      display: false
+    },
+    title: {
+      display: true,
+        text: "Leaderboard",
+          fontSize: 60
+    },
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontSize: 40,
+          beginAtZero: true
+        }
+      }],
+        yAxes: [{
+          ticks: {
+            fontSize: 40
+          }
+        }]
+    }
+  }
+  });
+</script>

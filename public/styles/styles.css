@@ -1,3 +1,8 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+canvas {
+  width: 800px !important;
+  height: 400px !important;
+}
