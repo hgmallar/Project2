@@ -2,11 +2,27 @@ var db = require("../models");
 
 module.exports = function(app) {
   // Load index page
+  // app.get("/", function(req, res) {
+  //   db.User.findAll({}).then(function(dbUsers) {
+  //     res.render("index", {
+  //       msg: "Welcome!",
+  //       users: dbUsers
+  //     });
+  //   });
+  // });
+
+  //When rendering the frontpage, get the top 5 leaders from the database and send the info to chart.js
   app.get("/", function(req, res) {
-    db.User.findAll({}).then(function(dbUsers) {
+    db.User.findAll({limit: 5, order: [['wins', 'DESC']]}).then(function(dbUsers) {
+      var data=[];
+      var leaders = [];
+      for(i=0; i<dbUsers.length; i++) {
+        data.push(parseInt(dbUsers[i].wins));
+        leaders.push(dbUsers[i].username.toString());
+      }
       res.render("index", {
-        msg: "Welcome!",
-        examples: dbUsers
+        data: data,
+        leaders: leaders
       });
     });
   });

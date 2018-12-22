@@ -1,56 +1,88 @@
 <div id="home">
   <div class="container">
 
-<!-- start -->
-
-  <div class="form-group colgit ">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Sign In!</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputUsername" placeholder="Username">
-      </div>
-  
-      
-      <div class="col-sm-10">
-        <input type="email" class="form-control" id="inputPassword" placeholder="Password">
-      </div>
-    </div>
-
-<!-- end -->
-
-
-
     <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
+      <div class="col-8 offset-2" id="topbanner">
+        <h1>Welcome, To Tic-Tac Toe!</h1>
         <form class="clearfix mb-4" action="POST">
           <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
+            <label for="username-input">Username:</label>
+            <input type="text" id="username-input" class="form-control" placeholder="Username">
           </div>
           <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
+            <label for="password-input">Password:</label>
+            <input type="text" id="password-input" class="form-control" placeholder="Password"></input>
           </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
+          <button id="usr-submit" class="btn btn-primary float-right">Submit</button>
         </form>
-        <h3>Excellent:</h3>
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
         </ul>
       </div>
     </div>
   </div>
-</div>
 
-<canvas id="myChart" width="400" height="400"></canvas>
+</div>
+<canvas class="mx-auto" id="myChart" width="300" height="300"></canvas>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
-<script type="text/javascript" src="/js/graph.js"></script>
+
+<!--chart.js horizontal bar graph-->
+<script>
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    title: {
+      fontsize: 60
+    },
+    data: {
+      labels: [
+        {{#each leaders}} 
+           "{{this}}",
+        {{/ each}}
+      ],
+  datasets: [{
+    label: '# of Votes',
+    data: [{{ data }}],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)'
+    ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)'
+      ],
+        borderWidth: 1
+      }]
+    },
+  options: {
+    legend: {
+      display: false
+    },
+    title: {
+      display: true,
+        text: "Leaderboard",
+          fontSize: 60
+    },
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontSize: 40,
+          beginAtZero: true
+        }
+      }],
+        yAxes: [{
+          ticks: {
+            fontSize: 40
+          }
+        }]
+    }
+  }
+  });
+</script>
