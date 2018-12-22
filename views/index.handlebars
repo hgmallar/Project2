@@ -1,47 +1,20 @@
 <div id="home">
   <div class="container">
 
-    <!-- start -->
-
-    <div class="form-group colgit ">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Sign In!</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputUsername" placeholder="Username">
-      </div>
-
-
-      <div class="col-sm-10">
-        <input type="email" class="form-control" id="inputPassword" placeholder="Password">
-      </div>
-    </div>
-
-    <!-- end -->
-
-
-
     <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
+      <div class="col-8 offset-2" id="topbanner">
+        <h1>Welcome, To Tic-Tac Toe!</h1>
         <form class="clearfix mb-4" action="POST">
           <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
+            <label for="username-input">Username:</label>
+            <input type="text" id="username-input" class="form-control" placeholder="Username">
           </div>
           <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
+            <label for="password-input">Password:</label>
+            <input type="text" id="password-input" class="form-control" placeholder="Password"></input>
           </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
+          <button id="usr-submit" class="btn btn-primary float-right">Submit</button>
         </form>
-        <h3>Excellent:</h3>
-        <ul id="example-list" class="list-group">
-          {{#each users}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.username}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
         </ul>
       </div>
     </div>
@@ -54,7 +27,7 @@
 <script src="/js/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 
-//chart.js horizontal bar graph
+<!--chart.js horizontal bar graph-->
 <script>
   var ctx = document.getElementById("myChart").getContext('2d');
   var myChart = new Chart(ctx, {

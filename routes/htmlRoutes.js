@@ -21,8 +21,6 @@ module.exports = function(app) {
         leaders.push(dbUsers[i].username.toString());
       }
       res.render("index", {
-        msg: "Welcome!",
-        users: dbUsers,
         data: data,
         leaders: leaders
       });
