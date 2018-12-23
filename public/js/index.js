@@ -1,3 +1,32 @@
+//TicTacToeAnimation
+const $element = $('.tictactoe-animation');
+const imagePath = '/images';
+const totalFrames = 9;
+const animationDuration = 3000;
+const timePerFrame = animationDuration / totalFrames;
+let timeWhenLastUpdate;
+let timeFromLastUpdate;
+let frameNumber = 1;
+
+function step(startTime) {
+  if (!timeWhenLastUpdate) timeWhenLastUpdate = startTime;
+
+  timeFromLastUpdate = startTime - timeWhenLastUpdate;
+
+  if (timeFromLastUpdate > timePerFrame) {
+    $element.attr('src', imagePath + `/TicTacToe-${frameNumber}.png`);
+    timeWhenLastUpdate = startTime;
+
+    if (frameNumber >= totalFrames) {
+      frameNumber = 1;
+    } else {
+       frameNumber = frameNumber + 1;
+    }        
+  }
+
+  requestAnimationFrame(step);
+}
+
 // Get references to page elements
 var $exampleText = $("#example-text");
 var $exampleDescription = $("#example-description");
@@ -97,3 +126,14 @@ var handleDeleteBtnClick = function() {
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
+
+//Load the Tic Tac Toe Animation
+$(document).ready(() => {
+  for (var i = 1; i < totalFrames + 1; i++) {
+    $('body').append(`<div id="preload-image-${i}" style="background-image: url('${imagePath}/TicTacToe-${i}.png');"></div>`);
+  }
+});
+
+$(window).on('load', () => {
+  requestAnimationFrame(step);
+});
