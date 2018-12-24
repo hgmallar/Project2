@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": null,
+    "password": "M@jorFurry",
     "database": "tictacdb",
     "host": "localhost",
     "dialect": "mysql"
