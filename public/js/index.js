@@ -1,3 +1,13 @@
+//keeping the API object to save our calls
+var API = {
+  addUser: function (newUser) {
+    return $.ajax({
+      type: "POST",
+      url: "api/users/",
+      data: newUser
+    });
+  }
+};
 
 //TicTacToeAnimation
 const $element = $('.tictactoe-animation');
@@ -21,28 +31,55 @@ function step(startTime) {
     if (frameNumber >= totalFrames) {
       frameNumber = 1;
     } else {
-       frameNumber = frameNumber + 1;
-    }        
+      frameNumber = frameNumber + 1;
+    }
   }
 
   requestAnimationFrame(step);
 }
 
-$(document).ready(function() {
+//check users function
+function checkUsers(userData) {
+  var userFound = false;
+  //pull data from database
+  $.get("api/users/", function (dbData) {
+    console.log("Running get:" + userData);
 
-  //keeping the API object to save our calls
-  var API = {
-    addUser: function(newUser) {
-      return $.ajax({
-        type: "POST",
-        url: "api/users/",
-        data: newUser
+    for (i = 0; i < dbData.length; i++) {
+      var currentUsername = dbData[i].username;
+      var currentPassword = dbData[i].password;
+
+      if (userData.username === currentUsername) {
+        userFound = true;
+        //check password and either allow user in or deny them
+        if (userData.password === currentPassword) {
+          console.log("Password is a match! Redirecting to game page");
+          window.location.href = "/game";
+        } else {
+          console.log("Password is INCORRECT!");
+          alert("Incorrect password!");
+        }
+      } 
+    };
+    if (!userFound) {
+      //create new user
+      API.addUser(userData).then(function (data) {
+        //add user to DB then send them to game page.
+        console.log("Adding new user!");
+        window.location.href = "/game";
       });
     }
-  };
-  
+  });
+};
+
+
+$(document).ready(function () {
+
   //on clicking the user submit button
-  $("#usr-submit").on("click", function() {
+  $("#usr-submit").on("click", function (event) {
+
+    event.preventDefault();
+
     //pull user data
     var userData = {
       username: $("#username-input").val().trim(),
@@ -56,40 +93,7 @@ $(document).ready(function() {
     checkUsers(userData);
   });
 
-  //check users function
-  function checkUsers(userData) {
-    //pull data from database
-    $.get("api/users/", function(dbData) {
-      console.log("Running get:" + userData);
 
-      
-
-      for (i=0; i<=dbData.length; i++) {
-        var currentUsername = dbData[i].username;
-        var currentPassword = dbData[i].password;
-
-        if (userData.username === currentUsername) {
-          //check password and either allow user in or deny them
-          if (userData.password === currentPassword) {
-            console.log("Password is a match! Redirecting to game page");
-            window.location.href = "/game";
-          } else {
-            console.log("Password is INCORRECT!");
-            alert("Incorrect password!");
-          }
-        } else {
-          //create new user
-          API.addUser(userData).then(function(data) {
-            //add user to DB then send them to game page.
-            console.log("Adding new user!");
-            window.location.href = "/game";
-          });
-        };
-      };
-
-    });
-  };
-  
   //Load the Tic Tac Toe Animation
   for (var i = 1; i < totalFrames + 1; i++) {
     $('body').append(`<div id="preload-image-${i}" style="background-image: url('${imagePath}/TicTacToe-${i}.png');"></div>`);
