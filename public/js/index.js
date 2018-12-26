@@ -68,25 +68,29 @@ $(document).ready(function() {
         var currentUsername = dbData[i].username;
         var currentPassword = dbData[i].password;
 
+        console.log(currentUsername);
+
         if (userData.username === currentUsername) {
           //check password and either allow user in or deny them
           if (userData.password === currentPassword) {
             console.log("Password is a match! Redirecting to game page");
             window.location.href = "/game";
+            break;
           } else {
-            console.log("Password is INCORRECT!");
-            alert("Incorrect password!");
-          }
-        } else {
-          //create new user
-          API.addUser(userData).then(function(data) {
-            //add user to DB then send them to game page.
-            console.log("Adding new user!");
-            window.location.href = "/game";
-          });
+            console.log("Incorrect Password");
+            break;
+          };
+        //  else {
+        //   //create new user
+        //   API.addUser(userData).then(function(data) {
+        //     //add user to DB then send them to game page.
+        //     console.log("Adding new user!");
+        //     window.location.href = "/game";
+        //   });
+        // };
+      
         };
       };
-
     });
   };
   
@@ -94,10 +98,11 @@ $(document).ready(function() {
   for (var i = 1; i < totalFrames + 1; i++) {
     $('body').append(`<div id="preload-image-${i}" style="background-image: url('${imagePath}/TicTacToe-${i}.png');"></div>`);
   }
-});
 
-$(window).on('load', () => {
-  requestAnimationFrame(step);
+  $(window).on('load', () => {
+    requestAnimationFrame(step);
+  });
+  
 });
 
 // keeping the example code for the time being for reference
