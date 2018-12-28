@@ -59,7 +59,7 @@ function checkUsers(userData) {
           console.log("Password is INCORRECT!");
           alert("Incorrect password!");
         }
-      } 
+      }
     };
     if (!userFound) {
       //create new user
