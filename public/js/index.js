@@ -66,7 +66,9 @@ function checkUsers(userData) {
       API.addUser(userData).then(function (data) {
         //add user to DB then send them to game page.
         console.log("Adding new user!");
-        window.location.href = "/game";
+        socket.emit('new player', userData.username);
+        //window.location.href = "/game";
+        res.render("game", {name: userData.username});
       });
     }
   });
