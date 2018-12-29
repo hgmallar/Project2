@@ -32,6 +32,11 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/newuser", function(req, res) {
+    res.render("newuser", {  
+    });
+  });
+
   // // Load example page and pass in an example by id
   // app.get("/user/:id", function(req, res) {
   //   db.User.findOne({ where: { id: req.params.id } }).then(function(dbUser) {

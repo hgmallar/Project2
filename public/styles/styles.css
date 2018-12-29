@@ -1,106 +1,154 @@
-
-.list-group-item {
-  line-height: 2.5;
-}
-
-canvas {
-  width:60% !important;
-  height: 30% !important;
-}
-
-#topbanner{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#mainboard{
-  border: solid 1px green;
-  display: flex;
-  justify-content: center;
-}
-
-#job-titles{
-  display: flex;
-  border: solid 3px orange;
-  justify-content: center;
+.main{
   
-}
-#job-titles div{
   display: flex;
-  border: solid 3px limegreen;
-  justify-content: center;
- 
-}
-
-#leftprofile{
-  display: flex;
-  justify-content: center;
-  width: 45%;
-  background: rgb(168, 228, 223);
-}
-#rightprofile{
-  display: flex;
-  justify-content: center;
-  width: 45%;
-  background: rgb(237, 159, 159);
-}
-#lefts-turn{
-  width: 5%;
-  background: rgb(255, 255, 255);
-}
-#rights-turn{
-  width: 5%;
-  background: rgb(113, 113, 113);
-}
-
-#profiles{
-  display: flex;
-  border: 1px solid pink;
-  height: 50px;
-}
-
-.tictactoe-animation {
-  width: 100%;
-  height: 100%;
-  max-height: 100px;
-  max-width: 100px;
-}
-
-.container-1 div{
-  border: 1px red solid;
-}
-
-.container-1{
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-}
-
-#momma{
-  border: 1px blue solid;
-}
-
-.content{
-  margin: .4vw 0;
-  background: lightblue;
-  padding: .4vw;
-}
-
-
-.tic-box{
-  border: solid black 1px;
-  font-size: 5vw;
-  background: #6AB187;
+  justify-content: center;
   text-align: center;
-  color: lavender;
-}
-.tic-box:hover{
-  background: #20948B;
-}
-.tic-box {
-  width: 85px;
-  height: 85px;
-}
-
+  
+  }
+  
+  
+  .title{
+    font-size: 4vw;
+  }
+  
+  .momma-koh-prof{
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .koh-prof{
+    display: flex;
+    justify-content: center;
+    padding: 3px;
+    width: 50%;
+    background-color: #efefef;
+    border: #31d2e4 solid 6px;
+    border-radius: 5px;
+    margin: 10px;
+  }
+  
+  .momma-chal-prof{
+    display: flex;
+    justify-content: flex-start;
+    background-color: 
+  }
+  .chal-prof{
+    justify-content: center;
+    display: flex;
+    padding: 3px;
+    width: 50%;
+    background-color: #efefef;
+    border: #f73859 solid 6px;
+    border-radius: 5px;
+    margin: 10px;
+  }
+  .prof-top{
+    display: flex;
+    justify-content: space-evenly;
+    font-size:13px;
+  
+  }
+  
+  .prof-user{
+    font-size: 25px;
+  }
+  
+  .prof-details{
+    width: 200px;
+  }
+  
+  .prof-pic{
+    height: 75px;
+    width: 75px;
+    border: solid 1px black;
+  }
+  
+  .prof-title{
+    
+  }
+  
+  
+  .sunbelt{
+    display: flex;
+    justify-content: center;  
+  }
+  
+  .chal-poke{
+    display: flex;
+    border: solid 1px black;
+    flex-basis: 20%;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .game-board{
+    border: solid 1px black;
+    flex-basis: 50%;
+    height: 300px;
+  }
+  
+  .koh-poke{
+    border: solid 1px black;
+    flex-basis: 20%;
+    align-items: flex-start;
+    justify-content: center;
+    
+  }
+  
+  
+  .list-group-item {
+    line-height: 2.5;
+  }
+  
+  canvas {
+    width:60% !important;
+    height: 30% !important;
+  }
+  
+  #topbanner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #mainboard{
+    border: solid 1px green;
+    display: flex;
+    justify-content: center;
+  }
+  
+  
+  
+  
+  
+  .tictactoe-animation {
+    width: 100%;
+    height: 100%;
+    max-height: 100px;
+    max-width: 100px;
+  }
+  
+  
+  .content{
+    margin: .4vw 0;
+    background: lightblue;
+    padding: .4vw;
+  }
+  
+  
+  .tic-box{
+    border: solid black 1px;
+    font-size: 5vw;
+    background: #6AB187;
+    text-align: center;
+    color: lavender;
+  }
+  .tic-box:hover{
+    background: #20948B;
+  }
+  .tic-box {
+    width: 85px;
+    height: 85px;
+  }
+  
+  

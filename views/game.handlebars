@@ -1,54 +1,67 @@
-<!-- header -->
-<div class="row" id="momma">
-    <div id="game" class="col container-1">
-        <div class="item">
-        <h1><strong>Battle Arena</strong></h1>
-        </div>
-        <div class="item ">
-          <h2> Fight!</h2>
-        </div>
-    </div>
-</div>
-<!-- header -->   
-<br>
- <!-- main board -->
-<div class="container-fluid">
-    <div class="row" id="mainboard">
-      <div class="col-12 col-sm-6 content">
-        <div class="container-fluid tic-container">
-          <div class="row tic-row">
-            <div class="col-4 tic-box" id="00">C</button></div>
-            <div class="col-4 tic-box" id="01">C</button></div>
-            <div class="col-4 tic-box" id="02">C</button></div>
+<div class="main">
+  <div class="title">Battle Arena</div>
+    
+  <div class="momma-koh-prof">
+    <div class="koh-prof">
+      <div class="prof-pic user1">PIC</div>
+      <div class="prof-details">
+          <div class="prof-top">
+            <div class="prof-title">-King of the Hill-</div>
+            <div class="prof-level user1">Lvl: 32</div>
           </div>
-          <div class="row tic-row">
-            <div class="col-4 tic-box" id="10">C</button></div>
-            <div class="col-4 tic-box" id="11">C</button></div>
-            <div class="col-4 tic-box" id="12">C</button></div>
-          </div>
-          <div class="row tic-row">
-            <div class="col-4 tic-box" id="20">C</button></div>
-            <div class="col-4 tic-box" id="21">C</button></div>
-            <div class="col-4 tic-box" id="22">C</button></div>
-          </div>
-        </div>
+        <div class="prof-user user1">Jeffery B.</div>
+        <div class="prof-streak user1">Current Streak: 3</div>
       </div>
     </div>
   </div>
-<!-- main board -->
-<br>
-<div class="row" id="job-titles">
-  <div class="col">Challenger:</div>
-  <div class="col">King of the Hill:</div>
-</div>
-<!-- profiles -->
-<div class="row" id="profiles">
-  <div id="lefts-turn"></div>
-    <div id="leftprofile" class="">Tom</div>
-    <div id="rightprofile" class="">Jane</div>
-  <div id="rights-turn" class=""></div>
-</div>
-<!-- profiles -->
+    <div class=sunbelt>
+      <div class="chal-poke">challenger pokemon</div>
+      <div class="game-board">
+        <div class="container-fluid">
+          <div class="row" id="mainboard">
+            <div class="col-12 col-sm-6 content">
+              <div class="container-fluid tic-container">
+                <div class="row tic-row">
+                  <div class="col-4 tic-box" id="00">C</button></div>
+                  <div class="col-4 tic-box" id="01">C</button></div>
+                  <div class="col-4 tic-box" id="02">C</button></div>
+                </div>
+                <div class="row tic-row">
+                  <div class="col-4 tic-box" id="10">C</button></div>
+                  <div class="col-4 tic-box" id="11">C</button></div>
+                  <div class="col-4 tic-box" id="12">C</button></div>
+                </div>
+                <div class="row tic-row">
+                  <div class="col-4 tic-box" id="20">C</button></div>
+                  <div class="col-4 tic-box" id="21">C</button></div>
+                  <div class="col-4 tic-box" id="22">C</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="koh-poke">koh pokemon</div>
+    </div>
+
+  <div class="momma-chal-prof">
+    <div class="chal-prof">
+      <div class="prof-pic user2">PIC</div>
+      <div class="prof-details">
+          <div class="prof-top">
+            <div class="prof-title">-Challenger-</div>
+          <div class="prof-level user2">Lvl: 13</div>
+          </div>
+        <div class="prof-user user2">Janet G.</div>
+        <div class="prof-streak user2">Longest Streak: 7</div>
+      </div>
+    </div>
+  </div>
+
+
+    
+  </div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/game.js"></script>
 

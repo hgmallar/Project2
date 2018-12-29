@@ -13,7 +13,10 @@
             <label for="password-input">Password:</label>
             <input type="text" id="password-input" class="form-control" placeholder="Password"></input>
           </div>
-          <button id="usr-submit" class="btn btn-primary float-right">Submit</button>
+          <div class="login-info">
+            <a href="/newuser">First time here?</a>
+            <button id="usr-submit" class="btn btn-primary float-right">Submit</button>
+          </div>
         </form>
         </ul>
       </div>
@@ -43,7 +46,7 @@
         {{/ each}}
       ],
   datasets: [{
-    label: '# of Votes',
+    label: 'Wow!',
     data: [{{ data }}],
     backgroundColor: [
       'rgba(255, 99, 132, 0.2)',
@@ -68,7 +71,7 @@
     },
     title: {
       display: true,
-        text: "Leaderboard",
+        text: "Longest Streak Leaderboard:",
           fontSize: 60
     },
     scales: {
