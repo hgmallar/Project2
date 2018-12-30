@@ -40,7 +40,7 @@ function step(startTime) {
 
 //check users function
 function checkUsers(userData) {
-  
+
   //pull data from database
   $.get("api/users/", function (dbData) {
     console.log("Running get:" + userData);
@@ -48,11 +48,23 @@ function checkUsers(userData) {
     for (i = 0; i < dbData.length; i++) {
       var currentUsername = dbData[i].username;
       var currentPassword = dbData[i].password;
-
       if (userData.username === currentUsername) {
         //check password and either allow user in or deny them
         if (userData.password === currentPassword) {
+          //if password match, update the logOn
+
           console.log("Password is a match! Redirecting to game page");
+          var playerStatus = {
+            loggedOn: true
+          }
+          $.ajax("/api/users/" + userData.username, {
+            type: "PUT",
+            data: playerStatus
+          }).then(
+            function () {
+              console.log("updated loggedOn " + userData.username);
+            });
+
           window.location.href = "/game";
         } else {
           console.log("Password is INCORRECT!");
@@ -60,7 +72,7 @@ function checkUsers(userData) {
         }
       }
     };
-   });
+  });
 };
 
 function createUser(newUser) {
@@ -68,22 +80,22 @@ function createUser(newUser) {
 
   $.get("api/users/", function (dbData) {
     var usernameExists = false;
-    
-      for (i=0; i<dbData.length; i++) {
-        var currentUsername = dbData[i].username;
 
-        if (newUser.username === currentUsername) {
-          console.log("Username already taken!");
-          usernameExists = true;
-        };
+    for (i = 0; i < dbData.length; i++) {
+      var currentUsername = dbData[i].username;
+
+      if (newUser.username === currentUsername) {
+        console.log("Username already taken!");
+        usernameExists = true;
       };
-      
-      if (!usernameExists) {
-        API.addUser(newUser).then(function (data) {
-          console.log("Adding new user!");
-          window.location.href = "/game";
-        });
-      };
+    };
+
+    if (!usernameExists) {
+      API.addUser(newUser).then(function (data) {
+        console.log("Adding new user!");
+        window.location.href = "/game";
+      });
+    };
   });
 };
 
@@ -109,7 +121,7 @@ $(document).ready(function () {
   });
 
   //on signup as a new user
-  $("#new-usr-submit").on("click", function(event) {
+  $("#new-usr-submit").on("click", function (event) {
     event.preventDefault();
 
     var newUser = {
