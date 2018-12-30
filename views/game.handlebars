@@ -1,71 +1,91 @@
 <div class="main">
   <div class="title">Battle Arena</div>
-    
+
   <div class="momma-koh-prof">
     <div class="koh-prof">
-      <div class="prof-pic user1"><h2>X</h2></div>
+      <div class="prof-pic user1">
+        <h2>X</h2>
+      </div>
       <div class="prof-details">
-          <div class="prof-top">
-            <div class="prof-title">-King of the Hill-</div>
-            <div class="prof-level user1">Lvl: 32</div>
-          </div>
+        <div class="prof-top">
+          <div class="prof-title">-King of the Hill-</div>
+          <div class="prof-level user1">Lvl: 32</div>
+        </div>
         <div class="prof-user user1" id="player1"></div>
         <div class="prof-streak user1">Current Streak: 3</div>
       </div>
     </div>
   </div>
-    <div class=sunbelt>
-      <div class="chal-poke">
-        <div class="oval" id="chal-turn"></div>
-      </div>
-      <div class="game-board">
-        <div class="container-fluid">
-          <div class="row" id="mainboard">
-            <div class="col-12 col-sm-6 content">
-              <div class="container-fluid tic-container">
-                <div class="row tic-row">
-                  <div class="col-4 tic-box" id="00"> </button></div>
-                  <div class="col-4 tic-box" id="01"> </button></div>
-                  <div class="col-4 tic-box" id="02"> </button></div>
-                </div>
-                <div class="row tic-row">
-                  <div class="col-4 tic-box" id="10"> </button></div>
-                  <div class="col-4 tic-box" id="11"> </button></div>
-                  <div class="col-4 tic-box" id="12"> </button></div>
-                </div>
-                <div class="row tic-row">
-                  <div class="col-4 tic-box" id="20"> </button></div>
-                  <div class="col-4 tic-box" id="21"> </button></div>
-                  <div class="col-4 tic-box" id="22"> </button></div>
-                </div>
+  <div class=sunbelt>
+    <div class="chal-poke">
+      <div class="oval" id="chal-turn"></div>
+    </div>
+    <div class="game-board">
+      <div class="container-fluid">
+        <div class="row" id="mainboard">
+          <div class="col-12 col-sm-6 content">
+            <div class="container-fluid tic-container">
+              <div class="row tic-row">
+                <div class="col-4 tic-box" id="00"> </button></div>
+                <div class="col-4 tic-box" id="01"> </button></div>
+                <div class="col-4 tic-box" id="02"> </button></div>
+              </div>
+              <div class="row tic-row">
+                <div class="col-4 tic-box" id="10"> </button></div>
+                <div class="col-4 tic-box" id="11"> </button></div>
+                <div class="col-4 tic-box" id="12"> </button></div>
+              </div>
+              <div class="row tic-row">
+                <div class="col-4 tic-box" id="20"> </button></div>
+                <div class="col-4 tic-box" id="21"> </button></div>
+                <div class="col-4 tic-box" id="22"> </button></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="koh-poke">
-        <div class="oval" id="koh-turn"></div>
-      </div>
     </div>
+    <div class="koh-poke">
+      <div class="oval" id="koh-turn"></div>
+    </div>
+  </div>
 
   <div class="momma-chal-prof">
     <div class="chal-prof">
-      <div class="prof-pic user2"><h2>O</h2></div>
+      <div class="prof-pic user2">
+        <h2>O</h2>
+      </div>
       <div class="prof-details">
-          <div class="prof-top">
-            <div class="prof-title">-Challenger-</div>
+        <div class="prof-top">
+          <div class="prof-title">-Challenger-</div>
           <div class="prof-level user2">Lvl: 13</div>
-          </div>
+        </div>
         <div class="prof-user user2" id="player2"></div>
         <div class="prof-streak user2">Longest Streak: 7</div>
       </div>
     </div>
   </div>
+</div>
 
-
-    
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Game is already in session!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>There are already two players logged in and playing the game. You are watching the game and will be able
+          to play when a user logs out.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/game.js"></script>
-
