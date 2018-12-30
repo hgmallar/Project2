@@ -59,9 +59,13 @@
   }
   
   .prof-pic{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 75px;
     width: 75px;
     border: solid 1px black;
+
   }
   
   .prof-title{
@@ -76,25 +80,41 @@
   
   .chal-poke{
     display: flex;
-    border: solid 1px black;
-    flex-basis: 20%;
+    flex-basis: 25%;
     align-items: flex-end;
     justify-content: center;
+    padding-bottom: 10px;
+    padding-left: 25px;
   }
   .game-board{
-    border: solid 1px black;
+
     flex-basis: 50%;
-    height: 300px;
+    height: 100%;
   }
   
   .koh-poke{
-    border: solid 1px black;
-    flex-basis: 20%;
-    align-items: flex-start;
+    display: flex;
+    flex-basis: 25%;
+    align-items: center;
     justify-content: center;
+    padding-top: 10px;
+    padding-right: 25px;
     
   }
   
+  .oval {
+    width: 85%;
+    height: 20%;
+    border-radius: 70px / 30px;
+  }
+  
+  #koh-turn{
+    background: rgb(255, 213, 106);
+  }
+
+  #chal-turn{
+    background: rgb(164, 164, 164);
+  }
   
   .list-group-item {
     line-height: 2.5;
@@ -112,9 +132,10 @@
   }
   
   #mainboard{
-    border: solid 1px green;
+
     display: flex;
     justify-content: center;
+    
   }
   
   
@@ -124,7 +145,6 @@
     max-height: 100px;
     max-width: 100px;
   }
-  
   
   .content{
     margin: .4vw 0;
@@ -150,6 +170,6 @@
   .tic-box:hover{
     background: #20948B;
   }
-  
+
   
   
