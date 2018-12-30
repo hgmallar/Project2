@@ -11,9 +11,17 @@ var playerState = "wait";
 var playerWins = 0;
 var playerLosses = 0;
 
+var player1 = "";
+var player2 = "";
+
 var gameOn = false;
-socket.on('game begins', function () {
+socket.on('game begins', function (data) {
     gameOn = true;
+    player1 = data[0];
+    player2 = data[1];
+    $("#koh-turn").text(player1);
+    $("#player1").text(player1);
+    $("#player2").text(player2);
 })
 
 //updates the player's turn
@@ -23,6 +31,14 @@ function updateState() {
     }
     else {
         playerState = "turn";
+    }
+    if ($("#koh-turn").text() !== "") {
+        $("#koh-turn").text("");
+        $("#chal-turn").text(player2);
+    }
+    else {
+        $("#koh-turn").text(player1);
+        $("#chal-turn").text("");
     }
 }
 
@@ -47,6 +63,9 @@ function assignPlayer() {
                 else {
                     opponentMark = "X";
                 }
+                if (playerNumber === 1) {
+                    $("#player1").text(playerName);
+                }
             });
         });
 }
@@ -61,6 +80,7 @@ function reset() {
     else {
         playerState = "wait";
     }
+
 }
 
 //if win, update the player wins column in the database
@@ -201,11 +221,16 @@ socket.on('state', function (data) {
 });
 
 socket.on('disconnect', function (data) {
-    if(gameOn) {
+    if (gameOn) {
         gameOn = false;
         playerNumber = 1;
         textMark = "X";
         opponentMark = "O";
+        socket.emit('update players', playerName);
+        $("#koh-turn").text("");
+        $("#chal-turn").text("");
+        $("#player1").text(player1);
+        $("#player2").text("");
         reset();
     }
 });

@@ -57,17 +57,20 @@ db.sequelize.sync(syncOptions).then(function () {
 var playerTurn = "wait";
 var playerLetter = "O";
 var players = {};
+var playerNames = [];
 io.on('connection', function (socket) {
   socket.on('new player', function (userName) {
-    playerCount++;
+    playerCount = io.engine.clientsCount;
     console.log("There are " + playerCount + " players logged in.");
     if (playerCount === 1) {
       playerState = "turn";
       playerLetter = "X";
+      playerNames[0] = userName;
     }
     else {
       playerState = "wait";
       playerLetter = "O";
+      playerNames[1] = userName;
     }
     players[socket.id] = {
       name: userName,
@@ -77,15 +80,21 @@ io.on('connection', function (socket) {
     };
     socket.emit('player assignments', players[socket.id])
     if (playerCount === 2) {
-      io.emit('game begins');
+      io.emit('game begins', playerNames);
     }
+  });
+  socket.on('update players', function (userName) {
+    playerNames[0] = userName;
+    playerNames[1] = "";
   });
   socket.on('movement', function (data) {
     io.emit('state', data);
   });
-  socket.on('disconnect', function(){
-    playerCount--;
-    console.log('user disconnected');
+  socket.on('disconnect', function (data) {
+    if (playerCount != 0) {
+      playerCount = io.engine.clientsCount;
+    }
+    console.log('user disconnected.  count is ' + playerCount);
     io.emit('disconnect', playerCount);
   });
 });
