@@ -15,21 +15,13 @@ var player1 = "";
 var player2 = "";
 
 var gameOn = false;
-socket.on('game begins', function (data) {
-    gameOn = true;
-    player1 = data[0];
-    player2 = data[1];
-    $("#koh-turn").text(player1);
-    $("#player1").text(player1);
-    $("#player2").text(player2);
-})
 
 //updates the player's turn
 function updateState() {
     if (playerState === "turn") {
         playerState = "wait";
     }
-    else {
+    else if (playerState === "wait") {
         playerState = "turn";
     }
     if ($("#koh-turn").text() !== "") {
@@ -66,6 +58,11 @@ function assignPlayer() {
                 if (playerNumber === 1) {
                     $("#player1").text(playerName);
                 }
+                if (playerNumber > 2) {
+                    $("#myModal").modal("show");
+                    playerState = "hold";
+                    renderBoard(gameboard);
+                }
             });
         });
 }
@@ -77,7 +74,7 @@ function reset() {
     if (playerNumber === 1) {
         playerState = "turn";
     }
-    else {
+    else if (playerNumber === 2) {
         playerState = "wait";
     }
     $("#koh-turn").text(player1);
@@ -86,32 +83,36 @@ function reset() {
 
 //if win, update the player wins column in the database
 function win() {
-    playerWins += 1;
-    var playerStatus = {
-        wins: playerWins
+    if (playerState != "hold") {
+        playerWins += 1;
+        var playerStatus = {
+            wins: playerWins
+        }
+        $.ajax("/api/users/" + playerName, {
+            type: "PUT",
+            data: playerStatus
+        }).then(
+            function () {
+                console.log("updated wins " + playerName);
+            });
     }
-    $.ajax("/api/users/" + playerName, {
-        type: "PUT",
-        data: playerStatus
-    }).then(
-        function () {
-            console.log("updated wins " + playerName);
-        });
 }
 
 //if lose, update the player losses column in the database
 function loss() {
-    playerLosses += 1;
-    var playerStatus = {
-        losses: playerLosses
+    if (playerState != "hold") {
+        playerLosses += 1;
+        var playerStatus = {
+            losses: playerLosses
+        }
+        $.ajax("/api/users/" + playerName, {
+            type: "PUT",
+            data: playerStatus
+        }).then(
+            function () {
+                console.log("updated losses " + playerName);
+            });
     }
-    $.ajax("/api/users/" + playerName, {
-        type: "PUT",
-        data: playerStatus
-    }).then(
-        function () {
-            console.log("updated losses " + playerName);
-        });
 }
 
 //render the board
@@ -214,6 +215,33 @@ $("#22").on("click", function (event) {
     }
 });
 
+socket.on('game begins', function (data) {
+    gameOn = true;
+    player1 = data[0];
+    player2 = data[1];
+    $("#koh-turn").text(player1);
+    $("#player1").text(player1);
+    $("#player2").text(player2);
+    if (playerName === player1) {
+        playerNumber = 1;
+        playerState = "turn";
+        textMark = "X";
+        opponentMark = "O";
+    }
+    else if (playerName === player2) {
+        playerNumber = 2;
+        playerState = "wait";
+        textMark = "O";
+        opponentMark = "X";
+    }
+    reset();
+});
+
+socket.on('game in play', function (data) {
+    gameboard = data;
+    renderBoard(data);
+})
+
 socket.on('state', function (data) {
     gameboard = data;
     renderBoard(data);
@@ -222,12 +250,11 @@ socket.on('state', function (data) {
 });
 
 socket.on('disconnect', function (data) {
-    if (gameOn) {
+    if (gameOn && (data < 2)) {
         gameOn = false;
         playerNumber = 1;
         textMark = "X";
         opponentMark = "O";
-        socket.emit('update players', playerName);
         reset();
         $("#koh-turn").text("");
         $("#chal-turn").text("");
