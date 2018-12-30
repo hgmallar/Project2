@@ -83,6 +83,11 @@ io.on('connection', function (socket) {
   socket.on('movement', function (data) {
     io.emit('state', data);
   });
+  socket.on('disconnect', function(){
+    playerCount--;
+    console.log('user disconnected');
+    io.emit('disconnect', playerCount);
+  });
 });
 
 module.exports = app;
