@@ -60,7 +60,7 @@ function checkUsers(userData) {
         }
       }
     };
-  });
+   });
 };
 
 function createUser(newUser) {

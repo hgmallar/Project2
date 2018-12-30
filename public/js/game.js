@@ -1,19 +1,32 @@
-var textMark = "X";
-var opponentMark = "O";
+var socket = io();
 
-var availableSpots = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
+var textMark;
+var opponentMark;
+
+var gameboard = ["C", "C", "C", "C", "C", "C", "C", "C", "C"];
 
 var playerName = "";
+var playerNumber;
+var playerState = "wait";
 var playerWins = 0;
 var playerLosses = 0;
 
-function switchUser() {
-    var randomIndex = Math.floor(Math.random() * Math.floor(availableSpots.length - 1));
-    var idToUpdate = "#" + availableSpots[randomIndex];
-    $(idToUpdate).text(opponentMark);
-    availableSpots.splice(randomIndex,1);
+var gameOn = false;
+socket.on('game begins', function () {
+    gameOn = true;
+})
+
+//updates the player's turn
+function updateState() {
+    if (playerState === "turn") {
+        playerState = "wait";
+    }
+    else {
+        playerState = "turn";
+    }
 }
 
+//assign the playername and status
 function assignPlayer() {
     $.ajax("/api/users/", {
         type: "GET"
@@ -23,13 +36,34 @@ function assignPlayer() {
             playerName = dbPlayer[0].username;
             playerWins = dbPlayer[0].wins;
             playerLosses = dbPlayer[0].losses;
+            socket.emit('new player', dbPlayer[0].username);
+            socket.on('player assignments', function (data) {
+                textMark = data.letter;
+                playerState = data.state;
+                playerNumber = data.count;
+                if (textMark === "X") {
+                    opponentMark = "O";
+                }
+                else {
+                    opponentMark = "X";
+                }
+            });
         });
 }
 
+// reset the game after a win
 function reset() {
-    $(".tic-box").text("C");
+    gameboard = ["C", "C", "C", "C", "C", "C", "C", "C", "C"];
+    renderBoard(gameboard);
+    if (playerNumber === 1) {
+        playerState = "turn";
+    }
+    else {
+        playerState = "wait";
+    }
 }
 
+//if win, update the player wins column in the database
 function win() {
     playerWins += 1;
     var playerStatus = {
@@ -44,6 +78,7 @@ function win() {
         });
 }
 
+//if lose, update the player losses column in the database
 function loss() {
     playerLosses += 1;
     var playerStatus = {
@@ -56,6 +91,19 @@ function loss() {
         function () {
             console.log("updated losses " + playerName);
         });
+}
+
+//render the board
+function renderBoard(data) {
+    $("#00").text(data[0]);
+    $("#01").text(data[1]);
+    $("#02").text(data[2]);
+    $("#10").text(data[3]);
+    $("#11").text(data[4]);
+    $("#12").text(data[5]);
+    $("#20").text(data[6]);
+    $("#21").text(data[7]);
+    $("#22").text(data[8]);
 }
 
 //check score
@@ -80,6 +128,7 @@ function checkWins() {
         (($("#01").text() === opponentMark) && ($("#11").text() === opponentMark) && ($("#21").text() === opponentMark)) ||
         (($("#02").text() === opponentMark) && ($("#12").text() === opponentMark) && ($("#22").text() === opponentMark))) {
         loss();
+        reset();
     }
     else if (($("#00").text() !== "C") && ($("#01").text() !== "C") && ($("#02").text() !== "C") &&
         ($("#10").text() !== "C") && ($("#11").text() !== "C") && ($("#12").text() !== "C") &&
@@ -87,65 +136,67 @@ function checkWins() {
         //check for full gameboard
         reset();
     }
-    else {
-        //if no winner and game not over, switch turns
-        switchUser();
+}
+
+//when a tile is clicked, check if it's a turn, updated the gameboard, render the board, and check for a win
+function tileClick(arrayIndex) {
+    if (gameOn && (playerState === "turn")) {
+        gameboard[arrayIndex] = textMark;
+        socket.emit('movement', gameboard);
     }
 }
 
 //When tile is clicked, assign and check for a win
 $("#00").on("click", function (event) {
-    //if a username has been entered, add the message to the database
-    $("#00").text(textMark);
-    availableSpots.splice(availableSpots.indexOf("00"),1);
-    checkWins();
+    if ($("#00").text() === "C") {
+        tileClick(0);
+    }
 });
 $("#01").on("click", function (event) {
-    //if a username has been entered, add the message to the database
-    $("#01").text(textMark);
-    availableSpots.splice(availableSpots.indexOf("01"),1);
-    checkWins();
+    if ($("#01").text() === "C") {
+        tileClick(1);
+    }
 });
 $("#02").on("click", function (event) {
-    //if a username has been entered, add the message to the database
-    $("#02").text(textMark);
-    availableSpots.splice(availableSpots.indexOf("02"),1);
-    checkWins();
+    if ($("#02").text() === "C") {
+        tileClick(2);
+    }
 });
 $("#10").on("click", function (event) {
-    //if a username has been entered, add the message to the database
-    $("#10").text(textMark);
-    availableSpots.splice(availableSpots.indexOf("10"),1);
-    checkWins();
+    if ($("#10").text() === "C") {
+        tileClick(3);
+    }
 });
 $("#11").on("click", function (event) {
-    //if a username has been entered, add the message to the database
-    $("#11").text(textMark);
-    availableSpots.splice(availableSpots.indexOf("11"),1);
-    checkWins();
+    if ($("#11").text() === "C") {
+        tileClick(4);
+    }
 });
 $("#12").on("click", function (event) {
-    //if a username has been entered, add the message to the database
-    $("#12").text(textMark);
-    availableSpots.splice(availableSpots.indexOf("12"),1);
-    checkWins();
+    if ($("#12").text() === "C") {
+        tileClick(5);
+    }
 });
 $("#20").on("click", function (event) {
-    //if a username has been entered, add the message to the database
-    $("#20").text(textMark);
-    availableSpots.splice(availableSpots.indexOf("20"),1);
-    checkWins();
+    if ($("#20").text() === "C") {
+        tileClick(6);
+    }
 });
 $("#21").on("click", function (event) {
-    //if a username has been entered, add the message to the database
-    $("#21").text(textMark);
-    availableSpots.splice(availableSpots.indexOf("21"),1);
-    checkWins();
+    if ($("#21").text() === "C") {
+        tileClick(7);
+    }
 });
 $("#22").on("click", function (event) {
-    //if a username has been entered, add the message to the database
-    $("#22").text(textMark);
-    availableSpots.splice(availableSpots.indexOf("22"),1);
+    if ($("#22").text() === "C") {
+        tileClick(8);
+    }
+});
+
+socket.on('state', function (data) {
+    gameboard = data;
+    renderBoard(data);
+    updateState();
     checkWins();
 });
 
