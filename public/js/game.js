@@ -44,7 +44,7 @@ function updateState() {
 
 //assign the playername and status
 function assignPlayer() {
-    $.ajax("/api/users/", {
+    $.ajax("/api/users/lastuser/", {
         type: "GET"
     }).then(
         function (dbPlayer) {
@@ -80,7 +80,8 @@ function reset() {
     else {
         playerState = "wait";
     }
-
+    $("#koh-turn").text(player1);
+    $("#chal-turn").text("");
 }
 
 //if win, update the player wins column in the database
@@ -227,11 +228,11 @@ socket.on('disconnect', function (data) {
         textMark = "X";
         opponentMark = "O";
         socket.emit('update players', playerName);
+        reset();
         $("#koh-turn").text("");
         $("#chal-turn").text("");
         $("#player1").text(player1);
         $("#player2").text("");
-        reset();
     }
 });
 

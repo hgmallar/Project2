@@ -3,7 +3,14 @@ var db = require("../models");
 module.exports = function (app) {
   // Get all examples
   app.get("/api/users", function (req, res) {
-    db.User.findAll({limit: 1, order: [['updatedAt', 'DESC']]}).then(function(dbUser) {
+    db.User.findAll().then(function (dbUser) {
+      res.json(dbUser);
+    });
+  });
+
+  // Get most recent user
+  app.get("/api/users/lastuser", function (req, res) {
+    db.User.findAll({ limit: 1, order: [['updatedAt', 'DESC']] }).then(function (dbUser) {
       res.json(dbUser);
     });
   });
