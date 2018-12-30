@@ -40,7 +40,7 @@ function step(startTime) {
 
 //check users function
 function checkUsers(userData) {
-  var userFound = false;
+  
   //pull data from database
   $.get("api/users/", function (dbData) {
     console.log("Running get:" + userData);
@@ -50,7 +50,6 @@ function checkUsers(userData) {
       var currentPassword = dbData[i].password;
 
       if (userData.username === currentUsername) {
-        userFound = true;
         //check password and either allow user in or deny them
         if (userData.password === currentPassword) {
           console.log("Password is a match! Redirecting to game page");
@@ -61,16 +60,30 @@ function checkUsers(userData) {
         }
       }
     };
-    if (!userFound) {
-      //create new user
-      API.addUser(userData).then(function (data) {
-        //add user to DB then send them to game page.
-        console.log("Adding new user!");
-        socket.emit('new player', userData.username);
-        //window.location.href = "/game";
-        res.render("game", {name: userData.username});
-      });
-    }
+   });
+};
+
+function createUser(newUser) {
+  //check to see if username is already taken
+
+  $.get("api/users/", function (dbData) {
+    var usernameExists = false;
+    
+      for (i=0; i<dbData.length; i++) {
+        var currentUsername = dbData[i].username;
+
+        if (newUser.username === currentUsername) {
+          console.log("Username already taken!");
+          usernameExists = true;
+        };
+      };
+      
+      if (!usernameExists) {
+        API.addUser(newUser).then(function (data) {
+          console.log("Adding new user!");
+          window.location.href = "/game";
+        });
+      };
   });
 };
 
@@ -93,6 +106,19 @@ $(document).ready(function () {
 
     //run function to check users
     checkUsers(userData);
+  });
+
+  //on signup as a new user
+  $("#new-usr-submit").on("click", function(event) {
+    event.preventDefault();
+
+    var newUser = {
+      username: $("#new-username-input").val().trim(),
+      password: $("#new-password-input").val().trim(),
+      loggedOn: true
+    };
+
+    createUser(newUser);
   });
 
 
