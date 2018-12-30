@@ -3,7 +3,7 @@ var socket = io();
 var textMark;
 var opponentMark;
 
-var gameboard = ["C", "C", "C", "C", "C", "C", "C", "C", "C"];
+var gameboard = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
 var playerName = "";
 var playerNumber;
@@ -53,7 +53,7 @@ function assignPlayer() {
 
 // reset the game after a win
 function reset() {
-    gameboard = ["C", "C", "C", "C", "C", "C", "C", "C", "C"];
+    gameboard = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
     renderBoard(gameboard);
     if (playerNumber === 1) {
         playerState = "turn";
@@ -130,9 +130,9 @@ function checkWins() {
         loss();
         reset();
     }
-    else if (($("#00").text() !== "C") && ($("#01").text() !== "C") && ($("#02").text() !== "C") &&
-        ($("#10").text() !== "C") && ($("#11").text() !== "C") && ($("#12").text() !== "C") &&
-        ($("#20").text() !== "C") && ($("#21").text() !== "C") && ($("#22").text() !== "C")) {
+    else if (($("#00").text() !== " ") && ($("#01").text() !== " ") && ($("#02").text() !== " ") &&
+        ($("#10").text() !== " ") && ($("#11").text() !== " ") && ($("#12").text() !== " ") &&
+        ($("#20").text() !== " ") && ($("#21").text() !== " ") && ($("#22").text() !== " ")) {
         //check for full gameboard
         reset();
     }
@@ -148,47 +148,47 @@ function tileClick(arrayIndex) {
 
 //When tile is clicked, assign and check for a win
 $("#00").on("click", function (event) {
-    if ($("#00").text() === "C") {
+    if ($("#00").text() === " ") {
         tileClick(0);
     }
 });
 $("#01").on("click", function (event) {
-    if ($("#01").text() === "C") {
+    if ($("#01").text() === " ") {
         tileClick(1);
     }
 });
 $("#02").on("click", function (event) {
-    if ($("#02").text() === "C") {
+    if ($("#02").text() === " ") {
         tileClick(2);
     }
 });
 $("#10").on("click", function (event) {
-    if ($("#10").text() === "C") {
+    if ($("#10").text() === " ") {
         tileClick(3);
     }
 });
 $("#11").on("click", function (event) {
-    if ($("#11").text() === "C") {
+    if ($("#11").text() === " ") {
         tileClick(4);
     }
 });
 $("#12").on("click", function (event) {
-    if ($("#12").text() === "C") {
+    if ($("#12").text() === " ") {
         tileClick(5);
     }
 });
 $("#20").on("click", function (event) {
-    if ($("#20").text() === "C") {
+    if ($("#20").text() === " ") {
         tileClick(6);
     }
 });
 $("#21").on("click", function (event) {
-    if ($("#21").text() === "C") {
+    if ($("#21").text() === " ") {
         tileClick(7);
     }
 });
 $("#22").on("click", function (event) {
-    if ($("#22").text() === "C") {
+    if ($("#22").text() === " ") {
         tileClick(8);
     }
 });
@@ -198,6 +198,16 @@ socket.on('state', function (data) {
     renderBoard(data);
     updateState();
     checkWins();
+});
+
+socket.on('disconnect', function (data) {
+    if(gameOn) {
+        gameOn = false;
+        playerNumber = 1;
+        textMark = "X";
+        opponentMark = "O";
+        reset();
+    }
 });
 
 assignPlayer();
