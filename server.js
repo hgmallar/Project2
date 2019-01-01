@@ -91,15 +91,17 @@ io.on('connection', function (socket) {
     io.emit('state', data);
   });
   socket.on('disconnect', function (data) {
-    var index = players[socket.id].count - 1;
-    playerNames.splice(index,1);
-    if (playerCount != 0) {
-      playerCount = io.engine.clientsCount;
-    }
-    console.log('user disconnected.  count is ' + playerCount);
-    io.emit('disconnect', playerCount);
-    if ((playerCount === 2) && (index < 2)) {
-      io.emit('game begins', playerNames);
+    if (players[socket.id]) {
+      var index = players[socket.id].count - 1;
+      playerNames.splice(index, 1);
+      if (playerCount != 0) {
+        playerCount = io.engine.clientsCount;
+      }
+      console.log('user disconnected.  count is ' + playerCount);
+      io.emit('disconnect', playerCount);
+      if ((playerCount === 2) && (index < 2)) {
+        io.emit('game begins', playerNames);
+      }
     }
   });
 });

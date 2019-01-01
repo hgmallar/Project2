@@ -8,13 +8,6 @@ module.exports = function (app) {
     });
   });
 
-  // Get most recent user
-  app.get("/api/users/lastuser", function (req, res) {
-    db.User.findAll({ limit: 1, order: [['updatedAt', 'DESC']] }).then(function (dbUser) {
-      res.json(dbUser);
-    });
-  });
-
   // Adding a new user
   app.post("/api/users", function (req, res) {
     db.User.create(req.body).then(function (dbUser) {

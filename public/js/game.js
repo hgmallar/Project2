@@ -36,35 +36,29 @@ function updateState() {
 
 //assign the playername and status
 function assignPlayer() {
-    $.ajax("/api/users/lastuser/", {
-        type: "GET"
-    }).then(
-        function (dbPlayer) {
-            console.log("player is " + dbPlayer[0].username);
-            playerName = dbPlayer[0].username;
-            playerWins = dbPlayer[0].wins;
-            playerLosses = dbPlayer[0].losses;
-            socket.emit('new player', dbPlayer[0].username);
-            socket.on('player assignments', function (data) {
-                textMark = data.letter;
-                playerState = data.state;
-                playerNumber = data.count;
-                if (textMark === "X") {
-                    opponentMark = "O";
-                }
-                else {
-                    opponentMark = "X";
-                }
-                if (playerNumber === 1) {
-                    $("#player1").text(playerName);
-                }
-                if (playerNumber > 2) {
-                    $("#myModal").modal("show");
-                    playerState = "hold";
-                    renderBoard(gameboard);
-                }
-            });
-        });
+    playerName = sessionStorage.getItem("username");
+    playerWins = sessionStorage.getItem("wins");
+    playerLosses = sessionStorage.getItem("losses");
+    socket.emit('new player', playerName);
+    socket.on('player assignments', function (data) {
+        textMark = data.letter;
+        playerState = data.state;
+        playerNumber = data.count;
+        if (textMark === "X") {
+            opponentMark = "O";
+        }
+        else {
+            opponentMark = "X";
+        }
+        if (playerNumber === 1) {
+            $("#player1").text(playerName);
+        }
+        if (playerNumber > 2) {
+            $("#myModal").modal("show");
+            playerState = "hold";
+            renderBoard(gameboard);
+        }
+    });
 }
 
 // reset the game after a win
@@ -95,6 +89,7 @@ function win() {
             function () {
                 console.log("updated wins " + playerName);
             });
+        sessionStorage.setItem("wins", playerWins);
     }
 }
 
@@ -112,6 +107,7 @@ function loss() {
             function () {
                 console.log("updated losses " + playerName);
             });
+        sessionStorage.setItem("losses", playerLosses);
     }
 }
 
