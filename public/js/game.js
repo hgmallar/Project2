@@ -27,12 +27,19 @@ function updateState() {
     if ($("#koh-turn").text() !== "") {
         $("#koh-turn").text("");
         $("#chal-turn").text(player2);
+        $("#chal-turn").css("background","khaki");
+        $("#koh-turn").css("background","grey");
     }
     else {
         $("#koh-turn").text(player1);
         $("#chal-turn").text("");
+        $("#chal-turn").css("background","grey");
+        $("#koh-turn").css("background","khaki");
     }
 }
+//+ 2 reset
+$("#chal-turn").css("background","grey");
+$("#koh-turn").css("background","khaki");
 
 //assign the playername and status
 function assignPlayer() {
@@ -62,6 +69,8 @@ function assignPlayer() {
                     $("#myModal").modal("show");
                     playerState = "hold";
                     renderBoard(gameboard);
+                    
+
                 }
             });
         });
@@ -79,6 +88,8 @@ function reset() {
     }
     $("#koh-turn").text(player1);
     $("#chal-turn").text("");
+    $("#chal-turn").css("background","grey");
+    $("#koh-turn").css("background","khaki");
 }
 
 //if win, update the player wins column in the database
@@ -117,6 +128,7 @@ function loss() {
 
 //render the board
 function renderBoard(data) {
+
     $("#00").text(data[0]);
     $("#01").text(data[1]);
     $("#02").text(data[2]);
@@ -217,6 +229,7 @@ $("#22").on("click", function (event) {
 
 socket.on('game begins', function (data) {
     gameOn = true;
+    console.log(data);
     player1 = data[0];
     player2 = data[1];
     $("#koh-turn").text(player1);
