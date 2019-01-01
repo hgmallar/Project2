@@ -37,8 +37,8 @@ function updateState() {
 //assign the playername and status
 function assignPlayer() {
     playerName = sessionStorage.getItem("username");
-    playerWins = sessionStorage.getItem("wins");
-    playerLosses = sessionStorage.getItem("losses");
+    playerWins = parseInt(sessionStorage.getItem("wins"));
+    playerLosses = parseInt(sessionStorage.getItem("losses"));
     socket.emit('new player', playerName);
     socket.on('player assignments', function (data) {
         textMark = data.letter;
