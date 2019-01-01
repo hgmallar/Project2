@@ -54,7 +54,9 @@ function checkUsers(userData) {
         //check password and either allow user in or deny them
         if (userData.password === currentPassword) {
           //if password match, update the logOn
-
+          sessionStorage.setItem("username", userData.username);
+          sessionStorage.setItem("wins", dbData[i].wins);
+          sessionStorage.setItem("losses", dbData[i].losses);
           console.log("Password is a match! Redirecting to game page");
           $(".modal-title").text("Logging in...");
           $("#modal-text").text("You're logged in! Redirecting to game page!");
@@ -104,6 +106,9 @@ function createUser(newUser) {
         $("#modal-text").text("Your account is created! Logging you in...");
         $(".modal").modal("show");
         window.location.href = "/game";
+        sessionStorage.setItem("username", newUser.username);
+        sessionStorage.setItem("wins", newUser.wins);
+        sessionStorage.setItem("losses", newUser.losses);
       });
     };
   });
@@ -137,6 +142,8 @@ $(document).ready(function () {
     var newUser = {
       username: $("#new-username-input").val().trim(),
       password: $("#new-password-input").val().trim(),
+      wins: 0,
+      losses: 0,
       loggedOn: true
     };
 
