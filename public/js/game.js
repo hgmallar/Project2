@@ -27,10 +27,15 @@ function updateState() {
     if ($("#koh-turn").text() !== "") {
         $("#koh-turn").text("");
         $("#chal-turn").text(player2);
+        $("#chal-turn").css("background","khaki");
+        $("#koh-turn").css("background","grey");
+        
     }
     else {
         $("#koh-turn").text(player1);
         $("#chal-turn").text("");
+        $("#chal-turn").css("background","grey");
+        $("#koh-turn").css("background","khaki");
     }
 }
 
@@ -73,6 +78,8 @@ function reset() {
     }
     $("#koh-turn").text(player1);
     $("#chal-turn").text("");
+    $("#chal-turn").css("background","grey");
+    $("#koh-turn").css("background","khaki");
 }
 
 //if win, update the player wins column in the database
