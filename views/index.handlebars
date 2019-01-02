@@ -43,7 +43,7 @@
 </div>
 
 </div>
-<canvas class="mx-auto" id="myChart"></canvas>
+<div id="chart"><canvas class="mx-auto" id="myChart"></canvas></div>
 
 {{!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
 <script src="/socket.io/socket.io.js"></script>
@@ -55,9 +55,7 @@
   var ctx = document.getElementById("myChart").getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'horizontalBar',
-    title: {
-      fontsize: 60
-    },
+    responsive: true,
     data: {
       labels: [
         {{#each leaders}} 
@@ -90,21 +88,15 @@
     },
     title: {
       display: true,
-        text: "Longest Streak Leaderboard:",
-          fontSize: 60
+        text: "Leaderboard:",
+          fontSize: 20
     },
     scales: {
       xAxes: [{
         ticks: {
-          fontSize: 40,
           beginAtZero: true
         }
-      }],
-        yAxes: [{
-          ticks: {
-            fontSize: 40
-          }
-        }]
+      }]
     }
   }
   });
