@@ -12,7 +12,9 @@ var playerWins = 0;
 var playerLosses = 0;
 
 var player1 = "";
+var wins1 = 0;
 var player2 = "";
+var wins2 = 0;
 
 var gameOn = false;
 
@@ -44,7 +46,7 @@ function assignPlayer() {
     playerName = sessionStorage.getItem("username");
     playerWins = parseInt(sessionStorage.getItem("wins"));
     playerLosses = parseInt(sessionStorage.getItem("losses"));
-    socket.emit('new player', playerName);
+    socket.emit('new player', playerName, playerWins);
     socket.on('player assignments', function (data) {
         textMark = data.letter;
         playerState = data.state;
@@ -57,6 +59,7 @@ function assignPlayer() {
         }
         if (playerNumber === 1) {
             $("#player1").text(playerName);
+            $("#wins1").text("Wins: " + playerWins);
         }
         if (playerNumber > 2) {
             $("#myModal").modal("show");
@@ -98,6 +101,14 @@ function win() {
             });
         sessionStorage.setItem("wins", playerWins);
     }
+    if (player1 === playerName) {
+        wins1++;
+    }
+    else if (player2 === playerName) {
+        wins2++;
+    }
+    $("#wins1").text("Wins: " + wins1)
+    $("#wins2").text("Wins: " + wins2);
 }
 
 //if lose, update the player losses column in the database
@@ -116,6 +127,14 @@ function loss() {
             });
         sessionStorage.setItem("losses", playerLosses);
     }
+    if (player1 === playerName) {
+        wins2++;
+    }
+    else if (player2 === playerName) {
+        wins1++;
+    }
+    $("#wins1").text("Wins: " + wins1)
+    $("#wins2").text("Wins: " + wins2);
 }
 
 //render the board
@@ -220,11 +239,15 @@ $("#22").on("click", function (event) {
 
 socket.on('game begins', function (data) {
     gameOn = true;
-    player1 = data[0];
-    player2 = data[1];
+    player1 = data[0].name;
+    player2 = data[1].name;
+    wins1 = data[0].win;
+    wins2 = data[1].win;
     $("#koh-turn").text(player1);
     $("#player1").text(player1);
     $("#player2").text(player2);
+    $("#wins1").text("Wins: " + wins1);
+    $("#wins2").text("Wins: " + wins2);
     if (playerName === player1) {
         playerNumber = 1;
         playerState = "turn";
@@ -262,7 +285,9 @@ socket.on('disconnect', function (data) {
         $("#koh-turn").text("");
         $("#chal-turn").text("");
         $("#player1").text(player1);
+        $("#wins1").text("Wins: " + wins1)
         $("#player2").text("");
+        $("#wins2").text("");
     }
 });
 
