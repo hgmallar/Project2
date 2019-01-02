@@ -85,7 +85,7 @@ io.on('connection', function (socket) {
       io.emit('game begins', playerNames);
     }
     if (playerCount > 2) {
-      socket.emit('game in play', gameboard);
+      io.emit('game in play', gameboard, playerNames);
     }
   });
   socket.on('movement', function (data) {
