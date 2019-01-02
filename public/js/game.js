@@ -41,7 +41,7 @@ function updateState() {
     }
 }
 
-//assign the playername and status
+//assign the playername and states
 function assignPlayer() {
     playerName = sessionStorage.getItem("username");
     playerWins = parseInt(sessionStorage.getItem("wins"));
@@ -83,6 +83,7 @@ function reset() {
     $("#chal-turn").text("");
     $("#chal-turn").css("background","grey");
     $("#koh-turn").css("background","khaki");
+    socket.emit('movement', gameboard);
 }
 
 //if win, update the player wins column in the database
@@ -237,6 +238,7 @@ $("#22").on("click", function (event) {
     }
 });
 
+//when a game begins
 socket.on('game begins', function (data) {
     gameOn = true;
     player1 = data[0].name;
@@ -263,11 +265,13 @@ socket.on('game begins', function (data) {
     reset();
 });
 
+//when a game is in play
 socket.on('game in play', function (data) {
     gameboard = data;
     renderBoard(data);
 })
 
+//when a player has moved
 socket.on('state', function (data) {
     gameboard = data;
     renderBoard(data);
@@ -275,7 +279,8 @@ socket.on('state', function (data) {
     checkWins();
 });
 
-socket.on('disconnect', function (data) {
+//when a player has disconnected
+socket.on('disconnect', function (data, index, playerNames) {
     if (gameOn && (data < 2)) {
         gameOn = false;
         playerNumber = 1;
