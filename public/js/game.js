@@ -272,6 +272,7 @@ socket.on('game in play', function (data, playerNames) {
 
     $("#player1").text(playerNames[0].name);
     $("#player2").text(playerNames[1].name);
+    
     //JON your code would go here
     //to access the playerNames in the waiting queue, playerNames[0].name is player 1, playerNames[1].name is player 2, 
     //and everyone from playersNames[2].name and beyond is waiting
