@@ -266,9 +266,14 @@ socket.on('game begins', function (data) {
 });
 
 //when a game is in play
-socket.on('game in play', function (data) {
+socket.on('game in play', function (data, playerNames) {
     gameboard = data;
     renderBoard(data);
+
+    //JON your code would go here
+    //to access the playerNames in the waiting queue, playerNames[0].name is player 1, playerNames[1].name is player 2, 
+    //and everyone from playersNames[2].name and beyond is waiting
+    
 })
 
 //when a player has moved
