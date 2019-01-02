@@ -59,11 +59,13 @@ var playerLetter = "O";
 var players = {};
 var playerNames = [];
 var gameboard = ["", "", "", "", "", "", "", "", ""];
+
+//user connected
 io.on('connection', function (socket) {
   socket.on('new player', function (userName, wins) {
     playerCount = io.engine.clientsCount;
     console.log("There are " + playerCount + " players logged in.");
-    playerNames[playerCount - 1] = {name: userName, win: wins};
+    playerNames[playerCount - 1] = { name: userName, win: wins };
     if (playerCount === 1) {
       playerState = "turn";
       playerLetter = "X";
@@ -92,14 +94,19 @@ io.on('connection', function (socket) {
   });
   socket.on('disconnect', function (data) {
     if (players[socket.id]) {
-      var index = players[socket.id].count - 1;
+      var index;
+      for (var i = 0; i < playerNames.length; i++) {
+        if (players[socket.id].name === playerNames[i].name) {
+          index = i;
+        }
+      }
       playerNames.splice(index, 1);
       if (playerCount != 0) {
         playerCount = io.engine.clientsCount;
       }
       console.log('user disconnected.  count is ' + playerCount);
-      io.emit('disconnect', playerCount);
-      if ((playerCount === 2) && (index < 2)) {
+      io.emit('disconnect', playerCount, index, playerNames);
+      if ((playerCount >= 2) && (index < 2)) {
         io.emit('game begins', playerNames);
       }
     }
