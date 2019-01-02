@@ -60,10 +60,10 @@ var players = {};
 var playerNames = [];
 var gameboard = ["", "", "", "", "", "", "", "", ""];
 io.on('connection', function (socket) {
-  socket.on('new player', function (userName) {
+  socket.on('new player', function (userName, wins) {
     playerCount = io.engine.clientsCount;
     console.log("There are " + playerCount + " players logged in.");
-    playerNames[playerCount - 1] = userName;
+    playerNames[playerCount - 1] = {name: userName, win: wins};
     if (playerCount === 1) {
       playerState = "turn";
       playerLetter = "X";
