@@ -14,7 +14,7 @@
   
   .momma-koh-prof{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
   
   .koh-prof{
@@ -22,6 +22,7 @@
     justify-content: center;
     padding: 3px;
     width: 50%;
+    height: 100px;
     background-color: #efefef;
     border: #31d2e4 solid 6px;
     border-radius: 5px;
@@ -141,7 +142,6 @@
     
   }
   
-  
   .tictactoe-animation {
     width: 100%;
     height: 100%;
@@ -174,5 +174,26 @@
     background: #20948B;
   }
 
+  .user-que{
+    margin-left: 40px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+  }
   
-  
+  .user-title{
+    font-size: 3vw;
+  }
+
+  .list-group{
+    padding-left: 20px;
+    height: 110px;
+    overflow: auto;
+  }
+
+  .list-group-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+  }
