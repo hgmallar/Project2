@@ -156,6 +156,14 @@ $(document).ready(function () {
     createUser(newUser);
   });
 
+  $("#first-time").on("click", function (event) {
+    $("#newuser").show();
+    $("#login").hide();
+  });
+  $("#already").on("click", function (event) {
+    $("#newuser").hide();
+    $("#login").show();
+  });
 
   //Load the Tic Tac Toe Animation
   for (var i = 1; i < totalFrames + 1; i++) {
