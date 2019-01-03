@@ -30,15 +30,15 @@ function updateState() {
     if ($("#koh-turn").text() !== "") {
         $("#koh-turn").text("");
         $("#chal-turn").text(player2);
-        $("#chal-turn").css("background","khaki");
-        $("#koh-turn").css("background","grey");
-        
+        $("#chal-turn").css("background", "khaki");
+        $("#koh-turn").css("background", "grey");
+
     }
-    else {
+    else if ($("#chal-turn").text() !== "") {
         $("#koh-turn").text(player1);
         $("#chal-turn").text("");
-        $("#chal-turn").css("background","grey");
-        $("#koh-turn").css("background","khaki");
+        $("#chal-turn").css("background", "grey");
+        $("#koh-turn").css("background", "khaki");
     }
 }
 
@@ -63,6 +63,8 @@ function assignPlayer() {
             $("#wins1").text("Wins: " + playerWins);
         }
         if (playerNumber > 2) {
+            $(".modal-title").text("Game is already in session!");
+            $(".modal-body").text("There are already two players logged in and playing the game. You are watching the game and will be able to play when a user logs out.");
             $("#myModal").modal("show");
             playerState = "hold";
             renderBoard(gameboard);
@@ -75,18 +77,8 @@ function reset() {
     gameboard = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
     renderBoard(gameboard);
 
-    $("#myModal").hide();
+    $("#myModal").modal("hide");
 
-    if (playerNumber === 1) {
-        playerState = "turn";
-    }
-    else if (playerNumber === 2) {
-        playerState = "wait";
-    }
-    $("#koh-turn").text(player1);
-    $("#chal-turn").text("");
-    $("#chal-turn").css("background","grey");
-    $("#koh-turn").css("background","khaki");
     socket.emit('movement', gameboard);
 }
 
@@ -105,6 +97,7 @@ function win() {
                 console.log("updated wins " + playerName);
             });
         sessionStorage.setItem("wins", playerWins);
+        socket.emit("player won", playerWins);
     }
     if (player1 === playerName) {
         wins1++;
@@ -113,6 +106,17 @@ function win() {
     else if (player2 === playerName) {
         wins2++;
         $(".modal-title").text(player2 + " wins!");
+    }
+    else {
+        //update the wins for the waiting cue
+        if (textMark === "X") {
+            $(".modal-title").text(player1 + " wins!");
+            wins1++;
+        }
+        else {
+            $(".modal-title").text(player2 + " wins!");
+            wins2++;
+        }
     }
     $("#wins1").text("Wins: " + wins1);
     $("#wins2").text("Wins: " + wins2);
@@ -144,6 +148,17 @@ function loss() {
         wins1++;
         $(".modal-title").text(player1 + " wins!");
     }
+    else {
+        //update the wins for the waiting cue
+        if (textMark === "O") {
+            $(".modal-title").text(player1 + " wins!");
+            wins1++;
+        }
+        else {
+            $(".modal-title").text(player2 + " wins!");
+            wins2++;
+        }
+    }
     $("#wins1").text("Wins: " + wins1)
     $("#wins2").text("Wins: " + wins2);
     console.log("modal has changed");
@@ -174,7 +189,7 @@ function checkWins() {
         (($("#01").text() === textMark) && ($("#11").text() === textMark) && ($("#21").text() === textMark)) ||
         (($("#02").text() === textMark) && ($("#12").text() === textMark) && ($("#22").text() === textMark))) {
         win();
-        $("#myModal").show();
+        $("#myModal").modal("show");
         setTimeout(reset, 5000);
     }
     else if ((($("#00").text() === opponentMark) && ($("#01").text() === opponentMark) && ($("#02").text() === opponentMark)) ||
@@ -186,14 +201,17 @@ function checkWins() {
         (($("#01").text() === opponentMark) && ($("#11").text() === opponentMark) && ($("#21").text() === opponentMark)) ||
         (($("#02").text() === opponentMark) && ($("#12").text() === opponentMark) && ($("#22").text() === opponentMark))) {
         loss();
-        $("#myModal").show();
+        $("#myModal").modal("show");
         setTimeout(reset, 5000);
     }
     else if (($("#00").text() !== " ") && ($("#01").text() !== " ") && ($("#02").text() !== " ") &&
         ($("#10").text() !== " ") && ($("#11").text() !== " ") && ($("#12").text() !== " ") &&
         ($("#20").text() !== " ") && ($("#21").text() !== " ") && ($("#22").text() !== " ")) {
         //check for full gameboard
-        reset();
+        $(".modal-title").text("Nobody won!");
+        $(".modal-body").text("Preparing another game...");
+        $("#myModal").modal("show");
+        setTimeout(reset, 5000);
     }
 }
 
@@ -265,18 +283,27 @@ socket.on('game begins', function (data) {
     $("#wins1").text("Wins: " + wins1);
     $("#wins2").text("Wins: " + wins2);
     if (playerName === player1) {
+        $(".modal-body").text("You are player1");
         playerNumber = 1;
         playerState = "turn";
         textMark = "X";
         opponentMark = "O";
     }
     else if (playerName === player2) {
+        $(".modal-body").text("You are player2");
         playerNumber = 2;
         playerState = "wait";
         textMark = "O";
         opponentMark = "X";
     }
-    reset();
+    if ((playerName === player1) || (playerName === player2)) {
+        $(".modal-title").text("A new game session has begun!");
+        $("#myModal").modal("show");
+        setTimeout(reset, 5000);
+    }
+    else {
+        reset();
+    }
 });
 
 //when a game is in play
@@ -286,7 +313,12 @@ socket.on('game in play', function (data, playerNames) {
 
     $("#player1").text(playerNames[0].name);
     $("#player2").text(playerNames[1].name);
-    
+    player1 = playerNames[0].name;
+    player2 = playerNames[1].name;
+    wins1 = playerNames[0].win;
+    wins2 = playerNames[1].win;
+    $("#wins1").text(wins1);
+    $("#wins2").text(wins2);
     //JON your code would go here
     var html = '';  
     for(i = 0;i < playerNames.length; i++){
@@ -323,6 +355,7 @@ socket.on('disconnect', function (data, index, playerNames) {
         $("#wins1").text("Wins: " + wins1)
         $("#player2").text("");
         $("#wins2").text("");
+        socket.emit('movement', gameboard);
     }
 });
 
