@@ -71,7 +71,9 @@ function checkUsers(userData) {
               console.log("updated loggedOn " + userData.username);
             });
 
-          window.location.href = "/game";
+            setTimeout(function() {
+              window.location.href = "/game";
+            }, 5000);
         } else {
             $("#modal-text").text("Password is incorrect.");
             $(".modal").modal("show");
@@ -105,10 +107,14 @@ function createUser(newUser) {
         $(".modal-title").text("Welcome!");
         $("#modal-text").text("Your account is created! Logging you in...");
         $(".modal").modal("show");
-        window.location.href = "/game";
+        
         sessionStorage.setItem("username", newUser.username);
         sessionStorage.setItem("wins", newUser.wins);
         sessionStorage.setItem("losses", newUser.losses);
+
+        setTimeout(function() {
+          window.location.href = "/game";
+        }, 5000);
       });
     };
   });

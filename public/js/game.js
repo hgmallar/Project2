@@ -73,6 +73,9 @@ function assignPlayer() {
 function reset() {
     gameboard = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
     renderBoard(gameboard);
+
+    $("#myModal").hide();
+
     if (playerNumber === 1) {
         playerState = "turn";
     }
@@ -104,12 +107,16 @@ function win() {
     }
     if (player1 === playerName) {
         wins1++;
+        $(".modal-title").text(player1 + " wins!");
     }
     else if (player2 === playerName) {
         wins2++;
+        $(".modal-title").text(player2 + " wins!");
     }
-    $("#wins1").text("Wins: " + wins1)
+    $("#wins1").text("Wins: " + wins1);
     $("#wins2").text("Wins: " + wins2);
+    console.log("modal has changed");
+    $(".modal-body").text("Preparing another game...");
 }
 
 //if lose, update the player losses column in the database
@@ -130,12 +137,16 @@ function loss() {
     }
     if (player1 === playerName) {
         wins2++;
+        $(".modal-title").text(player2 + " wins!");
     }
     else if (player2 === playerName) {
         wins1++;
+        $(".modal-title").text(player1 + " wins!");
     }
     $("#wins1").text("Wins: " + wins1)
     $("#wins2").text("Wins: " + wins2);
+    console.log("modal has changed");
+    $(".modal-body").text("Preparing another game...");
 }
 
 //render the board
@@ -162,7 +173,8 @@ function checkWins() {
         (($("#01").text() === textMark) && ($("#11").text() === textMark) && ($("#21").text() === textMark)) ||
         (($("#02").text() === textMark) && ($("#12").text() === textMark) && ($("#22").text() === textMark))) {
         win();
-        reset();
+        $("#myModal").show();
+        setTimeout(reset, 5000);
     }
     else if ((($("#00").text() === opponentMark) && ($("#01").text() === opponentMark) && ($("#02").text() === opponentMark)) ||
         (($("#10").text() === opponentMark) && ($("#11").text() === opponentMark) && ($("#12").text() === opponentMark)) ||
@@ -173,7 +185,8 @@ function checkWins() {
         (($("#01").text() === opponentMark) && ($("#11").text() === opponentMark) && ($("#21").text() === opponentMark)) ||
         (($("#02").text() === opponentMark) && ($("#12").text() === opponentMark) && ($("#22").text() === opponentMark))) {
         loss();
-        reset();
+        $("#myModal").show();
+        setTimeout(reset, 5000);
     }
     else if (($("#00").text() !== " ") && ($("#01").text() !== " ") && ($("#02").text() !== " ") &&
         ($("#10").text() !== " ") && ($("#11").text() !== " ") && ($("#12").text() !== " ") &&
