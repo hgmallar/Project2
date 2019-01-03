@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === "test") {
 }
 
 // Starting the server, syncing our models ------------------------------------/
-var PORT = process.env.PORT || 3000; 
+//var PORT = process.env.PORT || 3000; 
 db.sequelize.sync(syncOptions).then(function () {
   server.listen(PORT, function () {
     console.log(

@@ -10,6 +10,7 @@ var playerNumber;
 var playerState = "wait";
 var playerWins = 0;
 var playerLosses = 0;
+var $users13 = $('#users13');
 
 var player1 = "";
 var wins1 = 0;
@@ -287,10 +288,18 @@ socket.on('game in play', function (data, playerNames) {
     $("#player2").text(playerNames[1].name);
     
     //JON your code would go here
+    var html = '';  
+    for(i = 0;i < playerNames.length; i++){
+        html += '<li class="list-group-item">'+playerNames[i].name+'</li>'
+    }
+    $users13.html(html);
+  
     //to access the playerNames in the waiting queue, playerNames[0].name is player 1, playerNames[1].name is player 2, 
     //and everyone from playersNames[2].name and beyond is waiting
+    
 
-})
+
+});
 
 //when a player has moved
 socket.on('state', function (data) {
