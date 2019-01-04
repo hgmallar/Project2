@@ -3,8 +3,8 @@
 
     <div class="row">
       <div class="col-8 offset-2" id="topbanner">
-        <h1><img class="tictactoe-animation mr-2 d-none d-md-inline-block" src="/images/TicTacToe-1.svg" alt="tic tact toe animation"/> Let's Tic-Tac Toe!</h1>
-        <form class="clearfix mb-4" action="POST">
+        <h1><img class="tictactoe-animation mr-2 d-none d-md-inline-block" src="/images/TicTacToe-1.svg" alt="tic tact toe animation"/> Let's Go Tic-Tac Toe!</h1>
+        <form class="clearfix mb-4" id="login" action="POST">
           <div class="form-group">
             <label for="username-input">Username:</label>
             <input type="text" id="username-input" class="form-control" placeholder="Username">
@@ -14,11 +14,29 @@
             <input type="text" id="password-input" class="form-control" placeholder="Password"></input>
           </div>
           <div class="login-info">
-            <a href="/newuser">First time here?</a>
+            <a href="#" id="first-time">First time here?</a>
             <button id="usr-submit" class="btn btn-primary float-right">Submit</button>
           </div>
         </form>
-        </ul>
+        <form class="clearfix mb-4" id="newuser" style="display: none;" action="POST">
+          <div class="form-group">
+            <label for="new-username-input">Username:</label>
+            <input type="text" id="new-username-input" class="form-control" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <label for="new-password-input">Password:</label>
+            <input type="text" id="new-password-input" class="form-control" placeholder="Password"></input>
+          </div>
+
+          <div class="form-group">
+            <label for="image-url">Profile Picture:</label>
+            <input type="text" id="user-pic" class="form-control" placeholder="Image URL"></input>
+          </div>
+          <div class="login-info">
+            <a href="#" id="already">Already here?</a> 
+            <button id="new-usr-submit" class="btn btn-primary float-right">Submit</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

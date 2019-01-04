@@ -94,6 +94,13 @@ io.on('connection', function (socket) {
     gameboard = data;
     io.emit('state', data);
   });
+  socket.on('player won', function(playerWins) {
+    for (var i = 0; i < playerNames.length; i++) {
+      if (players[socket.id].name === playerNames[i].name) {
+        playerNames[i].win = playerWins;
+      }
+    }
+  });
   socket.on('disconnect', function (data) {
     if (players[socket.id]) {
       var index;
