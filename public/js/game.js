@@ -11,11 +11,14 @@ var playerState = "wait";
 var playerWins = 0;
 var playerLosses = 0;
 var $users13 = $('#users13');
+var profilePic = "";
 
 var player1 = "";
 var wins1 = 0;
 var player2 = "";
 var wins2 = 0;
+var profpic1 = "";
+var profpic2 = "";
 
 var gameOn = false;
 
@@ -47,7 +50,8 @@ function assignPlayer() {
     playerName = sessionStorage.getItem("username");
     playerWins = parseInt(sessionStorage.getItem("wins"));
     playerLosses = parseInt(sessionStorage.getItem("losses"));
-    socket.emit('new player', playerName, playerWins);
+    profilePic = sessionStorage.getItem("profilePic");
+    socket.emit('new player', playerName, playerWins, profilePic);
     socket.on('player assignments', function (data) {
         textMark = data.letter;
         playerState = data.state;
@@ -61,6 +65,7 @@ function assignPlayer() {
         if (playerNumber === 1) {
             $("#player1").text(playerName);
             $("#wins1").text("Wins: " + playerWins);
+            $("#prof-pic1").attr("src", profilePic);
         }
         if (playerNumber > 2) {
             $(".modal-title").text("Game is already in session!");
@@ -274,14 +279,19 @@ $("#22").on("click", function (event) {
 socket.on('game begins', function (data) {
     gameOn = true;
     player1 = data[0].name;
-    player2 = data[1].name;
+    profpic1 = data[0].profpic;
     wins1 = data[0].win;
+    player2 = data[1].name;
+    profpic2 = data[1].profpic;
     wins2 = data[1].win;
     $("#koh-turn").text(player1);
     $("#player1").text(player1);
+    $("#prof-pic1").attr("src", profpic1);
     $("#player2").text(player2);
     $("#wins1").text("Wins: " + wins1);
     $("#wins2").text("Wins: " + wins2);
+    $("#prof-pic2").attr("src", profpic2);
+
     if (playerName === player1) {
         $(".modal-body").text("You are player1");
         playerNumber = 1;

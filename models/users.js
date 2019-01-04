@@ -16,7 +16,13 @@ module.exports = function(sequelize, DataTypes) {
     losses: {
       type: DataTypes.INTEGER,
       defaultValue: 0
+    },
+    profileUrl: {
+      type: DataTypes.STRING,
+      defaultValue: "https://cuse.com/images/responsive/nav_logo_b.png",
+      allowNull: false
     }
+
   });
   return User;
 };
