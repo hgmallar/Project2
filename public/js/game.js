@@ -134,20 +134,6 @@ function win() {
 
 //if lose, update the player losses column in the database, display a modal with the winner name, and update the wins text on the screen 
 function loss() {
-    if (playerState != "hold") {
-        playerLosses += 1;
-        var playerStatus = {
-            losses: playerLosses
-        }
-        $.ajax("/api/users/" + playerName, {
-            type: "PUT",
-            data: playerStatus
-        }).then(
-            function () {
-                console.log("updated losses " + playerName);
-            });
-        sessionStorage.setItem("losses", playerLosses);
-    }
     if (player1 === playerName) {
         wins2++;
         $(".modal-title").text(player2 + " wins!");
@@ -171,6 +157,23 @@ function loss() {
     $("#wins2").text("Wins: " + wins2);
     console.log("modal has changed");
     $(".modal-body").text("Preparing another game...");
+    if (playerState != "hold") {
+        playerLosses += 1;
+        var playerStatus = {
+            losses: playerLosses
+        }
+        $.ajax("/api/users/" + playerName, {
+            type: "PUT",
+            data: playerStatus
+        }).then(
+            function () {
+                console.log("updated losses " + playerName);
+            });
+        sessionStorage.setItem("losses", playerLosses);
+        //refresh the browser of the loser, so they get knocked out and rebooted to the back of the queue
+        //remove the reload if you don't want to do knockout anymore
+        location.reload();
+    }  
 }
 
 //render the board on the page
