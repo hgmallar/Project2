@@ -57,6 +57,10 @@ function checkUsers(userData) {
           sessionStorage.setItem("username", userData.username);
           sessionStorage.setItem("wins", dbData[i].wins);
           sessionStorage.setItem("losses", dbData[i].losses);
+          sessionStorage.setItem("profilePic", dbData[i].profileUrl);
+
+          console.log(dbData[i].profileUrl);
+          
           console.log("Password is a match! Redirecting to game page");
           $(".modal-title").text("Logging in...");
           $("#modal-text").text("You're logged in! Redirecting to game page!");
@@ -109,6 +113,7 @@ function createUser(newUser) {
         sessionStorage.setItem("username", newUser.username);
         sessionStorage.setItem("wins", newUser.wins);
         sessionStorage.setItem("losses", newUser.losses);
+        sessionStorage.setItem("profilePic", newUser.imageUrl);
       });
     };
   });
@@ -142,6 +147,7 @@ $(document).ready(function () {
     var newUser = {
       username: $("#new-username-input").val().trim(),
       password: $("#new-password-input").val().trim(),
+      imageUrl: $("#user-pic").val().trim(),
       wins: 0,
       losses: 0,
       loggedOn: true

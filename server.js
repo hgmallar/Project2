@@ -63,10 +63,10 @@ var gameboard = ["", "", "", "", "", "", "", "", ""];
 
 //user connected
 io.on('connection', function (socket) {
-  socket.on('new player', function (userName, wins) {
+  socket.on('new player', function (userName, wins, profilePic) {
     playerCount = io.engine.clientsCount;
     console.log("There are " + playerCount + " players logged in.");
-    playerNames[playerCount - 1] = { name: userName, win: wins };
+    playerNames[playerCount - 1] = { name: userName, win: wins, profpic: profilePic };
     if (playerCount === 1) {
       playerState = "turn";
       playerLetter = "X";
@@ -79,7 +79,8 @@ io.on('connection', function (socket) {
       name: userName,
       count: playerCount,
       state: playerState,
-      letter: playerLetter
+      letter: playerLetter,
+      profpic: profilePic
     };
     socket.emit('player assignments', players[socket.id])
     if (playerCount === 2) {
