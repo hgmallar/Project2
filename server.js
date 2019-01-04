@@ -113,7 +113,7 @@ io.on('connection', function (socket) {
         playerCount = io.engine.clientsCount;
       }
       console.log('user disconnected.  count is ' + playerCount);
-      io.emit('disconnect', playerCount, index, playerNames);
+      io.emit('disconnect', playerCount, playerNames);
       if ((playerCount >= 2) && (index < 2)) {
         io.emit('game begins', playerNames);
       }
