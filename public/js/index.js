@@ -1,4 +1,4 @@
-//keeping the API object to save our calls
+//API object to add a user
 var API = {
   addUser: function (newUser) {
     return $.ajax({
@@ -19,6 +19,7 @@ let timeWhenLastUpdate;
 let timeFromLastUpdate;
 let frameNumber = 1;
 
+//callback function for requestAnimationFrame
 function step(startTime) {
   if (!timeWhenLastUpdate) timeWhenLastUpdate = startTime;
 
@@ -38,7 +39,7 @@ function step(startTime) {
   requestAnimationFrame(step);
 }
 
-//check users function
+//check if user already exists, and if so, check that the password is correct
 function checkUsers(userData) {
 
   //pull data from database
@@ -77,7 +78,7 @@ function checkUsers(userData) {
 
             setTimeout(function() {
               window.location.href = "/game";
-            }, 5000);
+            }, 3000);
         } else {
             $("#modal-text").text("Password is incorrect.");
             $(".modal").modal("show");
@@ -90,6 +91,7 @@ function checkUsers(userData) {
   });
 };
 
+//create a new user, as long as the username does not already exist
 function createUser(newUser) {
   //check to see if username is already taken
 
@@ -118,16 +120,15 @@ function createUser(newUser) {
         sessionStorage.setItem("profilePic", newUser.imageUrl);
         setTimeout(function() {
           window.location.href = "/game";
-        }, 5000);
+        }, 3000);
       });
     };
   });
 };
 
-
 $(document).ready(function () {
 
-  //on clicking the user submit button
+  //on clicking the user submit button, check the user
   $("#usr-submit").on("click", function (event) {
 
     event.preventDefault();
@@ -145,7 +146,7 @@ $(document).ready(function () {
     checkUsers(userData);
   });
 
-  //on signup as a new user
+  //on signup as a new user, create a user
   $("#new-usr-submit").on("click", function (event) {
     event.preventDefault();
 
@@ -161,24 +162,21 @@ $(document).ready(function () {
     createUser(newUser);
   });
 
+  //if first time user link is clicked, show the first time user form, and hide the login form
   $("#first-time").on("click", function (event) {
     $("#newuser").show();
     $("#login").hide();
   });
+  // if already logged in link is clicked, show the login form, and hide the new user login form
   $("#already").on("click", function (event) {
     $("#newuser").hide();
     $("#login").show();
   });
 
-  //Load the Tic Tac Toe Animation
-  for (var i = 1; i < totalFrames + 1; i++) {
-    $('body').append(`<div id="preload-image-${i}" style="background-image: url('${imagePath}/TicTacToe-${i}.png');"></div>`);
-  }
 });
 
-$(window).on('load', () => {
-  requestAnimationFrame(step);
-});
+//start the animation
+requestAnimationFrame(step);
 
 
 
