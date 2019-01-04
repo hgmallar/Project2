@@ -323,6 +323,8 @@ socket.on('game in play', function (data, playerNames) {
 
     $("#player1").text(playerNames[0].name);
     $("#player2").text(playerNames[1].name);
+    $("#prof-pic1").attr("src", playerNames[0].profpic);
+    $("#prof-pic2").attr("src", playerNames[1].profpic);
     player1 = playerNames[0].name;
     player2 = playerNames[1].name;
     wins1 = playerNames[0].win;
@@ -331,7 +333,7 @@ socket.on('game in play', function (data, playerNames) {
     $("#wins2").text(wins2);
     //JON your code would go here
     var html = '';
-    for (i = 0; i < playerNames.length; i++) {
+    for (i = 2; i < playerNames.length; i++) {
         html += '<li class="list-group-item">' + playerNames[i].name + '</li>'
     }
     $users13.html(html);
@@ -372,7 +374,7 @@ socket.on('disconnect', function (data, playerNames) {
     }
     else if (data > 2) {
         var html = '';
-        for (i = 0; i < playerNames.length; i++) {
+        for (i = 2; i < playerNames.length; i++) {
             html += '<li class="list-group-item">' + playerNames[i].name + '</li>'
         }
         $users13.html(html);
