@@ -39,20 +39,32 @@
 
 #user-pic{
   width: 300px;
+  margin-bottom: 20px;
+}
+
+.poke-choice{
+  width: 25%;
+}
+
+.poke-choices{
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+  margin-bottom: 10px;
+}
+
+.poke-img{
+  height: 100px;
 }
 
 .user-header{
-
   display: flex;
   justify-content: center;
   padding-top: 20px;
   padding-bottom: 20px;
 
 }
-
-
    #poke-select{
-    background-color: #31d2e4;
     width: 80% !important;
   }
   .title{
