@@ -330,15 +330,15 @@ socket.on('game in play', function (data, playerNames) {
     $("#wins1").text(wins1);
     $("#wins2").text(wins2);
     //JON your code would go here
-    var html = '';  
-    for(i = 0;i < playerNames.length; i++){
-        html += '<li class="list-group-item">'+playerNames[i].name+'</li>'
+    var html = '';
+    for (i = 0; i < playerNames.length; i++) {
+        html += '<li class="list-group-item">' + playerNames[i].name + '</li>'
     }
     $users13.html(html);
-  
+
     //to access the playerNames in the waiting queue, playerNames[0].name is player 1, playerNames[1].name is player 2, 
     //and everyone from playersNames[2].name and beyond is waiting
-    
+
 
 
 });
@@ -352,7 +352,7 @@ socket.on('state', function (data) {
 });
 
 //when a player has disconnected
-socket.on('disconnect', function (data, index, playerNames) {
+socket.on('disconnect', function (data, playerNames) {
     if (gameOn && (data < 2)) {
         gameOn = false;
         playerNumber = 1;
@@ -366,6 +366,16 @@ socket.on('disconnect', function (data, index, playerNames) {
         $("#player2").text("");
         $("#wins2").text("");
         socket.emit('movement', gameboard);
+    }
+    else if (data === 2) {
+        $users13.html("<p></p>");
+    }
+    else if (data > 2) {
+        var html = '';
+        for (i = 0; i < playerNames.length; i++) {
+            html += '<li class="list-group-item">' + playerNames[i].name + '</li>'
+        }
+        $users13.html(html);
     }
 });
 
