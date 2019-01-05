@@ -4,7 +4,7 @@ CREATE TABLE users (
   id INT NOT NULL AUTO_INCREMENT,
   username VARCHAR(100) NOT NULL,
   password VARCHAR(100) NOT NULL,
-  profileUrl VARCHAR(500),
+  profileUrl VARCHAR(1000),
   loggedOn BOOLEAN,
   wins INTEGER(100),
   losses INTEGER(200),

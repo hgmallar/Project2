@@ -22,7 +22,7 @@ var profpic2 = "";
 
 var gameOn = false;
 
-//updates the player's turn
+//updates the player's turn, changes the states for players and resets the player name bubbles
 function updateState() {
     if (playerState === "turn") {
         playerState = "wait";
@@ -51,7 +51,9 @@ function assignPlayer() {
     playerWins = parseInt(sessionStorage.getItem("wins"));
     playerLosses = parseInt(sessionStorage.getItem("losses"));
     profilePic = sessionStorage.getItem("profilePic");
+    //tell the socket a new player has been added
     socket.emit('new player', playerName, playerWins, profilePic);
+    //when the players have been assigned by the server, update the marks and text on the screen
     socket.on('player assignments', function (data) {
         textMark = data.letter;
         playerState = data.state;
@@ -84,10 +86,11 @@ function reset() {
 
     $("#myModal").modal("hide");
 
+    //let the socket know the gameboard has been reset
     socket.emit('movement', gameboard);
 }
 
-//if win, update the player wins column in the database
+//if win, update the player wins column in the database, display a modal with the winner name, and update the wins text on the screen
 function win() {
     if (playerState != "hold") {
         playerWins += 1;
@@ -129,22 +132,8 @@ function win() {
     $(".modal-body").text("Preparing another game...");
 }
 
-//if lose, update the player losses column in the database
+//if lose, update the player losses column in the database, display a modal with the winner name, and update the wins text on the screen 
 function loss() {
-    if (playerState != "hold") {
-        playerLosses += 1;
-        var playerStatus = {
-            losses: playerLosses
-        }
-        $.ajax("/api/users/" + playerName, {
-            type: "PUT",
-            data: playerStatus
-        }).then(
-            function () {
-                console.log("updated losses " + playerName);
-            });
-        sessionStorage.setItem("losses", playerLosses);
-    }
     if (player1 === playerName) {
         wins2++;
         $(".modal-title").text(player2 + " wins!");
@@ -168,9 +157,26 @@ function loss() {
     $("#wins2").text("Wins: " + wins2);
     console.log("modal has changed");
     $(".modal-body").text("Preparing another game...");
+    if (playerState != "hold") {
+        playerLosses += 1;
+        var playerStatus = {
+            losses: playerLosses
+        }
+        $.ajax("/api/users/" + playerName, {
+            type: "PUT",
+            data: playerStatus
+        }).then(
+            function () {
+                console.log("updated losses " + playerName);
+            });
+        sessionStorage.setItem("losses", playerLosses);
+        //refresh the browser of the loser, so they get knocked out and rebooted to the back of the queue
+        //remove the reload if you don't want to do knockout anymore
+        location.reload();
+    }  
 }
 
-//render the board
+//render the board on the page
 function renderBoard(data) {
     $("#00").text(data[0]);
     $("#01").text(data[1]);
@@ -183,7 +189,7 @@ function renderBoard(data) {
     $("#22").text(data[8]);
 }
 
-//check score
+//check for wins, losses, and a full board
 function checkWins() {
     if ((($("#00").text() === textMark) && ($("#01").text() === textMark) && ($("#02").text() === textMark)) ||
         (($("#10").text() === textMark) && ($("#11").text() === textMark) && ($("#12").text() === textMark)) ||
@@ -220,7 +226,7 @@ function checkWins() {
     }
 }
 
-//when a tile is clicked, check if it's a turn, updated the gameboard, render the board, and check for a win
+//when a tile is clicked, check if it's a turn, updated the gameboard, and tell the socket a movement has happened
 function tileClick(arrayIndex) {
     if (gameOn && (playerState === "turn")) {
         gameboard[arrayIndex] = textMark;
@@ -228,7 +234,7 @@ function tileClick(arrayIndex) {
     }
 }
 
-//When tile is clicked, assign and check for a win
+//When tile is clicked, call tileClick
 $("#00").on("click", function (event) {
     if ($("#00").text() === " ") {
         tileClick(0);
@@ -275,7 +281,7 @@ $("#22").on("click", function (event) {
     }
 });
 
-//when a game begins
+//when server says a game begins, assign players
 socket.on('game begins', function (data) {
     gameOn = true;
     player1 = data[0].name;
@@ -316,34 +322,31 @@ socket.on('game begins', function (data) {
     }
 });
 
-//when a game is in play
+//when a game is in play, assign players, and add queue because there is now a player in the queue
 socket.on('game in play', function (data, playerNames) {
     gameboard = data;
     renderBoard(data);
 
     $("#player1").text(playerNames[0].name);
     $("#player2").text(playerNames[1].name);
+    $("#prof-pic1").attr("src", playerNames[0].profpic);
+    $("#prof-pic2").attr("src", playerNames[1].profpic);
     player1 = playerNames[0].name;
     player2 = playerNames[1].name;
     wins1 = playerNames[0].win;
     wins2 = playerNames[1].win;
     $("#wins1").text(wins1);
     $("#wins2").text(wins2);
-    //JON your code would go here
+    
     var html = '';
-    for (i = 0; i < playerNames.length; i++) {
+    for (i = 2; i < playerNames.length; i++) {
         html += '<li class="list-group-item">' + playerNames[i].name + '</li>'
     }
     $users13.html(html);
 
-    //to access the playerNames in the waiting queue, playerNames[0].name is player 1, playerNames[1].name is player 2, 
-    //and everyone from playersNames[2].name and beyond is waiting
-
-
-
 });
 
-//when a player has moved
+//when a player has moved, get the gameboard, render the board, update the player state, and check for wins
 socket.on('state', function (data) {
     gameboard = data;
     renderBoard(data);
@@ -351,9 +354,10 @@ socket.on('state', function (data) {
     checkWins();
 });
 
-//when a player has disconnected
+//when a player has disconnected 
 socket.on('disconnect', function (data, playerNames) {
     if (gameOn && (data < 2)) {
+        //if a game was in play and there is only 1 player connected now, reset the text on the screen. 
         gameOn = false;
         playerNumber = 1;
         textMark = "X";
@@ -368,15 +372,18 @@ socket.on('disconnect', function (data, playerNames) {
         socket.emit('movement', gameboard);
     }
     else if (data === 2) {
+        //if there are only 2 players left, remove the queue
         $users13.html("<p></p>");
     }
     else if (data > 2) {
+        //there are still more than 2 players, so reset the queue
         var html = '';
-        for (i = 0; i < playerNames.length; i++) {
+        for (i = 2; i < playerNames.length; i++) {
             html += '<li class="list-group-item">' + playerNames[i].name + '</li>'
         }
         $users13.html(html);
     }
 });
 
+//start by assigning the player
 assignPlayer();

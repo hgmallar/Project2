@@ -1,13 +1,72 @@
 .main{
-  
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  
+  }
+
+  .new-user-momma{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .main-user-momma{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
   
-  
+#first-time{
+  font-size: 1.8vw;
+  padding-right: 30px;
+}
+
+#already{
+  font-size: 1.8vw;
+  padding-right: 30px;
+
+}
+
+ .mainuserinput{
+  width: 200px;
+  margin-bottom: 15px;
+}
+
+#user-pic{
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.poke-choice{
+  width: 25%;
+}
+
+.poke-choices{
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+  margin-bottom: 10px;
+}
+
+.poke-img{
+  height: 100px;
+}
+
+.user-header{
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+}
+   #poke-select{
+    width: 80% !important;
+  }
   .title{
     font-size: 4vw;
   }
@@ -68,12 +127,6 @@
     border: solid 1px black;
 
   }
-  
-  .prof-title{
-    
-  }
-  
-  
   .sunbelt{
     display: flex;
     justify-content: center;  
@@ -102,6 +155,10 @@
     padding-right: 25px;
     
   }
+
+  h1{
+    font-size: 5vw;
+  }
   
   .oval {
     width: 85%;
@@ -127,11 +184,13 @@
     height: 30% !important;
     min-height: 200px !important;
     margin: 0 auto;
+    padding-top: 40px;
   }
   
   #topbanner{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
   
@@ -143,8 +202,8 @@
   }
   
   .tictactoe-animation {
-    width: 100%;
-    height: 100%;
+    width: 100px;
+    height: 100px;
     max-height: 100px;
     max-width: 100px;
   }
@@ -197,3 +256,5 @@
     justify-content: center;
     height: 40px;
   }
+
+ 
