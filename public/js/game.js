@@ -94,7 +94,8 @@ function reset() {
     $("#myModal").modal("hide");
 
     //let the socket know the gameboard has been reset
-    socket.emit('movement', gameboard);
+    //socket.emit('movement', gameboard);
+    socket.emit('reset', gameboard);
 }
 
 //if win, update the player wins column in the database, display a modal with the winner name, and update the wins text on the screen
@@ -180,7 +181,7 @@ function loss() {
         //refresh the browser of the loser, so they get knocked out and rebooted to the back of the queue
         //remove the reload if you don't want to do knockout anymore
         location.reload();
-    }  
+    }
 }
 
 //render the board on the page
@@ -207,8 +208,8 @@ function checkWins() {
         (($("#01").text() === textMark) && ($("#11").text() === textMark) && ($("#21").text() === textMark)) ||
         (($("#02").text() === textMark) && ($("#12").text() === textMark) && ($("#22").text() === textMark))) {
         win();
-        $("#myModal").modal("show");
-        setTimeout(reset, 5000);
+        //$("#myModal").modal("show");
+        //setTimeout(reset, 5000);
     }
     else if ((($("#00").text() === opponentMark) && ($("#01").text() === opponentMark) && ($("#02").text() === opponentMark)) ||
         (($("#10").text() === opponentMark) && ($("#11").text() === opponentMark) && ($("#12").text() === opponentMark)) ||
@@ -219,8 +220,8 @@ function checkWins() {
         (($("#01").text() === opponentMark) && ($("#11").text() === opponentMark) && ($("#21").text() === opponentMark)) ||
         (($("#02").text() === opponentMark) && ($("#12").text() === opponentMark) && ($("#22").text() === opponentMark))) {
         loss();
-        $("#myModal").modal("show");
-        setTimeout(reset, 5000);
+        //$("#myModal").modal("show");
+        //setTimeout(reset, 5000);
     }
     else if (($("#00").text() !== " ") && ($("#01").text() !== " ") && ($("#02").text() !== " ") &&
         ($("#10").text() !== " ") && ($("#11").text() !== " ") && ($("#12").text() !== " ") &&
@@ -345,7 +346,7 @@ socket.on('game in play', function (data, playerNames) {
     wins2 = playerNames[1].win;
     $("#wins1").text(wins1);
     $("#wins2").text(wins2);
-    
+
     var html = '';
     for (i = 2; i < playerNames.length; i++) {
         html += '<li class="list-group-item">' + playerNames[i].name + '</li>'

@@ -99,6 +99,13 @@ io.on('connection', function (socket) {
     io.emit('state', data);
   });
 
+  //a reset has been detected on the gameboard
+  socket.on('reset', function (data) {
+    gameboard = data;
+    //emit the movement to all sockets
+    //io.emit('state', data);
+  });
+
   //a player has won, increase the amount of wins stored in the playerNames array
   socket.on('player won', function(playerWins) {
     for (var i = 0; i < playerNames.length; i++) {
