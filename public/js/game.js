@@ -68,6 +68,13 @@ function assignPlayer() {
             $("#player1").text(playerName);
             $("#wins1").text("Wins: " + playerWins);
             $("#prof-pic1").attr("src", profilePic);
+            playerState = "turn";
+        }
+        else if (playerNumber === 2) {
+            $("#player2").text(playerName);
+            $("#wins2").text("Wins: " + playerWins);
+            $("#prof-pic2").attr("src", profilePic);
+            playerState = "wait";
         }
         if (playerNumber > 2) {
             $(".modal-title").text("Game is already in session!");
@@ -291,6 +298,7 @@ socket.on('game begins', function (data) {
     profpic2 = data[1].profpic;
     wins2 = data[1].win;
     $("#koh-turn").text(player1);
+    $("#chal-turn").text("");
     $("#player1").text(player1);
     $("#prof-pic1").attr("src", profpic1);
     $("#player2").text(player2);
@@ -366,6 +374,7 @@ socket.on('disconnect', function (data, playerNames) {
         $("#koh-turn").text("");
         $("#chal-turn").text("");
         $("#player1").text(player1);
+        playerState = "turn";
         $("#wins1").text("Wins: " + wins1)
         $("#player2").text("");
         $("#wins2").text("");
