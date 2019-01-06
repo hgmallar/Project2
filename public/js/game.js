@@ -81,7 +81,6 @@ function assignPlayer() {
             $(".modal-body").text("There are already two players logged in and playing the game. You are watching the game and will be able to play when a user logs out.");
             $("#myModal").modal("show");
             playerState = "hold";
-            renderBoard(gameboard);
         }
     });
 }
@@ -94,7 +93,6 @@ function reset() {
     $("#myModal").modal("hide");
 
     //let the socket know the gameboard has been reset
-    //socket.emit('movement', gameboard);
     socket.emit('reset', gameboard);
 }
 
@@ -136,7 +134,6 @@ function win() {
     }
     $("#wins1").text("Wins: " + wins1);
     $("#wins2").text("Wins: " + wins2);
-    console.log("modal has changed");
     $(".modal-body").text("Preparing another game...");
 }
 
@@ -163,7 +160,6 @@ function loss() {
     }
     $("#wins1").text("Wins: " + wins1)
     $("#wins2").text("Wins: " + wins2);
-    console.log("modal has changed");
     $(".modal-body").text("Preparing another game...");
     if (playerState != "hold") {
         playerLosses += 1;
@@ -179,8 +175,9 @@ function loss() {
             });
         sessionStorage.setItem("losses", playerLosses);
         //refresh the browser of the loser, so they get knocked out and rebooted to the back of the queue
-        //remove the reload if you don't want to do knockout anymore
-        location.reload();
+        //remove the reload and disconnect if you don't want to do knockout anymore
+        socket.emit('forceDisconnect');
+        location.reload(true);
     }
 }
 
@@ -230,7 +227,7 @@ function checkWins() {
         $(".modal-title").text("Nobody won!");
         $(".modal-body").text("Preparing another game...");
         $("#myModal").modal("show");
-        setTimeout(reset, 5000);
+        setTimeout(reset, 3000);
     }
 }
 
@@ -324,7 +321,7 @@ socket.on('game begins', function (data) {
     if ((playerName === player1) || (playerName === player2)) {
         $(".modal-title").text("A new game session has begun!");
         $("#myModal").modal("show");
-        setTimeout(reset, 5000);
+        setTimeout(reset, 3000);
     }
     else {
         reset();
@@ -335,7 +332,6 @@ socket.on('game begins', function (data) {
 socket.on('game in play', function (data, playerNames) {
     gameboard = data;
     renderBoard(data);
-
     $("#player1").text(playerNames[0].name);
     $("#player2").text(playerNames[1].name);
     $("#prof-pic1").attr("src", playerNames[0].profpic);
@@ -346,13 +342,11 @@ socket.on('game in play', function (data, playerNames) {
     wins2 = playerNames[1].win;
     $("#wins1").text(wins1);
     $("#wins2").text(wins2);
-
     var html = '';
     for (i = 2; i < playerNames.length; i++) {
         html += '<li class="list-group-item">' + playerNames[i].name + '</li>'
     }
     $users13.html(html);
-
 });
 
 //when a player has moved, get the gameboard, render the board, update the player state, and check for wins
