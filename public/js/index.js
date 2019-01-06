@@ -144,6 +144,9 @@ $(document).ready(function () {
 
     //run function to check users
     checkUsers(userData);
+
+    $("#username-input").val("");
+    $("#password-input").val("");
   });
 
   //on signup as a new user, create a user
@@ -160,6 +163,10 @@ $(document).ready(function () {
     };
 
     createUser(newUser);
+
+    $("#new-username-input").val("");
+    $("#new-password-input").val("");
+    $("#user-pic").val("");
   });
 
   //if first time user link is clicked, show the first time user form, and hide the login form

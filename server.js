@@ -84,6 +84,7 @@ io.on('connection', function (socket) {
     socket.emit('player assignments', players[socket.id])
     if (playerCount === 2) {
       //if there are now 2 players, emit to all sockets that the game has begun
+      gameboard = ["", "", "", "", "", "", "", "", ""];
       io.emit('game begins', playerNames);
     }
     if (playerCount > 2) {
@@ -104,6 +105,11 @@ io.on('connection', function (socket) {
     gameboard = data;
     //emit the movement to all sockets
     //io.emit('state', data);
+  });
+
+  //force a disconnect when a player loses so they get bumped to the bottom of the queue
+  socket.on('forceDisconnect', function () {
+    socket.disconnect();
   });
 
   //a player has won, increase the amount of wins stored in the playerNames array
