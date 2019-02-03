@@ -21,8 +21,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       defaultValue: "https://cuse.com/images/responsive/nav_logo_b.png",
       allowNull: false
+    },
+    userPokemon: {
+      type: DataTypes.INTEGER,
+      defaultValue: 4
     }
-
   });
   return User;
 };
