@@ -1,6 +1,6 @@
 //API object to add a user
 var API = {
-  addUser: function (newUser) {
+  addUser: function(newUser) {
     return $.ajax({
       type: "POST",
       url: "api/users/",
@@ -10,8 +10,8 @@ var API = {
 };
 
 //TicTacToeAnimation
-const $element = $('.tictactoe-animation');
-const imagePath = '/images';
+const $element = $(".tictactoe-animation");
+const imagePath = "/images";
 const totalFrames = 9;
 const animationDuration = 3000;
 const timePerFrame = animationDuration / totalFrames;
@@ -26,7 +26,7 @@ function step(startTime) {
   timeFromLastUpdate = startTime - timeWhenLastUpdate;
 
   if (timeFromLastUpdate > timePerFrame) {
-    $element.attr('src', imagePath + `/TicTacToe-${frameNumber}.png`);
+    $element.attr("src", imagePath + `/TicTacToe-${frameNumber}.png`);
     timeWhenLastUpdate = startTime;
 
     if (frameNumber >= totalFrames) {
@@ -41,12 +41,13 @@ function step(startTime) {
 
 //check if user already exists, and if so, check that the password is correct
 function checkUsers(userData) {
-
   //pull data from database
-  $.get("api/users/", function (dbData) {
+  $.get("api/users/", function(dbData) {
     console.log("Running get:" + userData);
 
-    $("#modal-text").text("That username does not exist. Please make a new account!");
+    $("#modal-text").text(
+      "That username does not exist. Please make a new account!"
+    );
 
     for (i = 0; i < dbData.length; i++) {
       var currentUsername = dbData[i].username;
@@ -59,43 +60,43 @@ function checkUsers(userData) {
           sessionStorage.setItem("wins", dbData[i].wins);
           sessionStorage.setItem("losses", dbData[i].losses);
           sessionStorage.setItem("profilePic", dbData[i].profileUrl);
+          sessionStorage.setItem("profilePoke", dbData[i].userPokemon);
 
           console.log(dbData[i].profileUrl);
-          
+
           console.log("Password is a match! Redirecting to game page");
           $(".modal-title").text("Logging in...");
           $("#modal-text").text("You're logged in! Redirecting to game page!");
           var playerStatus = {
             loggedOn: true
-          }
+          };
           $.ajax("/api/users/" + userData.username, {
             type: "PUT",
             data: playerStatus
-          }).then(
-            function () {
-              console.log("updated loggedOn " + userData.username);
-            });
+          }).then(function() {
+            console.log("updated loggedOn " + userData.username);
+          });
 
-            setTimeout(function() {
-              window.location.href = "/game";
-            }, 3000);
+          setTimeout(function() {
+            window.location.href = "/game";
+          }, 3000);
         } else {
-            $("#modal-text").text("Password is incorrect.");
-            $(".modal").modal("show");
-            return;
+          $("#modal-text").text("Password is incorrect.");
+          $(".modal").modal("show");
+          return;
         }
       }
-    };
+    }
 
     $(".modal").modal("show");
   });
-};
+}
 
 //create a new user, as long as the username does not already exist
 function createUser(newUser) {
   //check to see if username is already taken
 
-  $.get("api/users/", function (dbData) {
+  $.get("api/users/", function(dbData) {
     var usernameExists = false;
 
     for (i = 0; i < dbData.length; i++) {
@@ -105,38 +106,42 @@ function createUser(newUser) {
         $("#modal-text").text("Username already taken!");
         $(".modal").modal("show");
         usernameExists = true;
-      };
-    };
+      }
+    }
 
     if (!usernameExists) {
-      API.addUser(newUser).then(function (data) {
+      API.addUser(newUser).then(function(data) {
         $(".modal-title").text("Welcome!");
         $("#modal-text").text("Your account is created! Logging you in...");
         $(".modal").modal("show");
-        
+
         sessionStorage.setItem("username", newUser.username);
         sessionStorage.setItem("wins", newUser.wins);
         sessionStorage.setItem("losses", newUser.losses);
         sessionStorage.setItem("profilePic", newUser.imageUrl);
+        sessionStorage.setItem("profilePoke", newUser.userPokemon);
+
         setTimeout(function() {
           window.location.href = "/game";
         }, 3000);
       });
-    };
+    }
   });
-};
+}
 
-$(document).ready(function () {
-
+$(document).ready(function() {
   //on clicking the user submit button, check the user
-  $("#usr-submit").on("click", function (event) {
-
+  $("#usr-submit").on("click", function(event) {
     event.preventDefault();
 
     //pull user data
     var userData = {
-      username: $("#username-input").val().trim(),
-      password: $("#password-input").val().trim(),
+      username: $("#username-input")
+        .val()
+        .trim(),
+      password: $("#password-input")
+        .val()
+        .trim(),
       loggedOn: true
     };
 
@@ -150,18 +155,24 @@ $(document).ready(function () {
   });
 
   //on signup as a new user, create a user
-  $("#new-usr-submit").on("click", function (event) {
+  $("#new-usr-submit").on("click", function(event) {
     event.preventDefault();
 
     var newUser = {
-      username: $("#new-username-input").val().trim(),
-      password: $("#new-password-input").val().trim(),
-      imageUrl: $("#user-pic").val().trim(),
+      username: $("#new-username-input")
+        .val()
+        .trim(),
+      password: $("#new-password-input")
+        .val()
+        .trim(),
+      imageUrl: $("#user-pic")
+        .val()
+        .trim(),
+      userPokemon: $("input[name=radAnswer]:checked").val(),
       wins: 0,
       losses: 0,
       loggedOn: true
     };
-
     createUser(newUser);
 
     $("#new-username-input").val("");
@@ -170,21 +181,16 @@ $(document).ready(function () {
   });
 
   //if first time user link is clicked, show the first time user form, and hide the login form
-  $("#first-time").on("click", function (event) {
+  $("#first-time").on("click", function(event) {
     $("#newuser").show();
     $("#login").hide();
   });
   // if already logged in link is clicked, show the login form, and hide the new user login form
-  $("#already").on("click", function (event) {
+  $("#already").on("click", function(event) {
     $("#newuser").hide();
     $("#login").show();
   });
-
 });
 
 //start the animation
 requestAnimationFrame(step);
-
-
-
-
