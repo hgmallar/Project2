@@ -51,7 +51,7 @@ function assignPlayer() {
   playerWins = parseInt(sessionStorage.getItem("wins"));
   playerLosses = parseInt(sessionStorage.getItem("losses"));
   profilePic = sessionStorage.getItem("profilePic");
-  profilePoke = sessionStorage.getItem("profilePoke");
+  profilePoke = parseInt(sessionStorage.getItem("profilePoke"));
 
   //tell the socket a new player has been added
   socket.emit("new player", playerName, playerWins, profilePic, profilePoke);
@@ -73,13 +73,13 @@ function assignPlayer() {
       console.log(profilePoke);
       //$("#koh-poke-img").attr("src,")
 
-      if ((profilePoke = 1)) {
+      if ((profilePoke === 1)) {
         $("#koh-poke-img").attr("src", "../images/bulbgif.gif");
-      } else if ((profilePoke = 2)) {
+      } else if ((profilePoke === 2)) {
         $("#koh-poke-img").attr("src", "../images/charmgif.gif");
-      } else if ((profilePoke = 3)) {
+      } else if ((profilePoke === 3)) {
         $("#koh-poke-img").attr("src", "../images/squirtlegif.gif");
-      } else if ((profilePoke = 4)) {
+      } else if ((profilePoke === 4)) {
         $("#koh-poke-img").attr("src", "../images/pikagif.gif");
       }
 
@@ -89,13 +89,13 @@ function assignPlayer() {
       $("#wins2").text("Wins: " + playerWins);
       $("#prof-pic2").attr("src", profilePic);
       console.log(profilePoke);
-      if ((profilePoke = 1)) {
+      if ((profilePoke === 1)) {
         $("#chal-poke-img").attr("src", "../images/bulbbackgif.gif");
-      } else if ((profilePoke = 2)) {
+      } else if ((profilePoke === 2)) {
         $("#chal-poke-img").attr("src", "../images/charmbackgif.gif");
-      } else if ((profilePoke = 3)) {
+      } else if ((profilePoke === 3)) {
         $("#chal-poke-img").attr("src", "../images/squirtleback.gif");
-      } else if ((profilePoke = 4)) {
+      } else if ((profilePoke === 4)) {
         $("#chal-poke-img").attr("src", "../images/pikabackgif.gif");
       }
 
@@ -356,11 +356,8 @@ socket.on("game begins", function(data) {
   player2 = data[1].name;
   profpic2 = data[1].profpic;
   wins2 = data[1].win;
-  profpoke1 = data[0].userpoke;
-  profpoke2 = data[1].userpoke;
-
-  console.log(profpoke1);
-  console.log(profpoke2);
+  profpoke1 = parseInt(data[0].userpoke);
+  profpoke2 = parseInt(data[1].userpoke);
 
   $("#chal-turn").text("");
   $("#player1").text(player1);
@@ -370,23 +367,27 @@ socket.on("game begins", function(data) {
   $("#wins2").text("Wins: " + wins2);
   $("#prof-pic2").attr("src", profpic2);
 
-  if ((profpoke1 = 1)) {
+  if ((profpoke1 === 1)) {
+    console.log("poke 1");
     $("#koh-poke-img").attr("src", "../images/bulbgif.gif");
-  } else if ((profpoke1 = 2)) {
+  } else if ((profpoke1 === 2)) {
+    console.log("poke 2");
     $("#koh-poke-img").attr("src", "../images/charmgif.gif");
-  } else if ((profpoke1 = 3)) {
+  } else if ((profpoke1 === 3)) {
+    console.log("poke 3");
     $("#koh-poke-img").attr("src", "../images/squirtlegif.gif");
-  } else if ((profpoke1 = 4)) {
+  } else if ((profpoke1 === 4)) {
+    console.log("poke 4");
     $("#koh-poke-img").attr("src", "../images/pikagif.gif");
   }
 
-  if ((profpoke2 = 1)) {
+  if ((profpoke2 === 1)) {
     $("#chal-poke-img").attr("src", "../images/bulbbackgif.gif");
-  } else if ((profpoke2 = 2)) {
+  } else if ((profpoke2 === 2)) {
     $("#chal-poke-img").attr("src", "../images/charmbackgif.gif");
-  } else if ((profpoke2 = 3)) {
+  } else if ((profpoke2 === 3)) {
     $("#chal-poke-img").attr("src", "../images/squirtleback.gif");
-  } else if ((profpoke2 = 4)) {
+  } else if ((profpoke2 === 4)) {
     $("#chal-poke-img").attr("src", "../images/pikabackgif.gif");
   }
 
@@ -432,23 +433,23 @@ socket.on("game in play", function(data, playerNames) {
   console.log(profpoke1);
   console.log(profpoke2);
 
-  if ((profpoke1 = 1)) {
+  if ((profpoke1 === 1)) {
     $("#koh-poke-img").attr("src", "../images/bulbgif.gif");
-  } else if ((profpoke1 = 2)) {
+  } else if ((profpoke1 === 2)) {
     $("#koh-poke-img").attr("src", "../images/charmgif.gif");
-  } else if ((profpoke1 = 3)) {
+  } else if ((profpoke1 === 3)) {
     $("#koh-poke-img").attr("src", "../images/squirtlegif.gif");
-  } else if ((profpoke1 = 4)) {
+  } else if ((profpoke1 === 4)) {
     $("#koh-poke-img").attr("src", "../images/pikagif.gif");
   }
 
-  if ((profpoke2 = 1)) {
+  if ((profpoke2 === 1)) {
     $("#chal-poke-img").attr("src", "../images/bulbbackgif.gif");
-  } else if ((profpoke2 = 2)) {
+  } else if ((profpoke2 === 2)) {
     $("#chal-poke-img").attr("src", "../images/charmbackgif.gif");
-  } else if ((profpoke2 = 3)) {
+  } else if ((profpoke2 === 3)) {
     $("#chal-poke-img").attr("src", "../images/squirtleback.gif");
-  } else if ((profpoke2 = 4)) {
+  } else if ((profpoke2 === 4)) {
     $("#chal-poke-img").attr("src", "../images/pikabackgif.gif");
   }
 
