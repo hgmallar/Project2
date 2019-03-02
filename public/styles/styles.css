@@ -144,10 +144,14 @@
 #chal-poke-img {
   padding-right: 25px;
   height: 140px;
+  margin-bottom: -15px;
+  z-index: 3;
 }
 
 #koh-poke-img {
   height: 140px;
+  margin-bottom: -15px;
+  z-index: 3;
 }
 
 .koh-poke {
