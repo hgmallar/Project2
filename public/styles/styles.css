@@ -171,11 +171,11 @@ h1 {
 }
 
 #koh-turn {
-  background: rgb(255, 213, 106);
+  background-color: khaki;
 }
 
 #chal-turn {
-  background: rgb(164, 164, 164);
+  background-color: grey;
 }
 
 .list-group-item {
