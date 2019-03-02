@@ -32,21 +32,14 @@ function updateState() {
   } else if (playerState === "wait") {
     playerState = "turn";
   }
-  console.log($("#koh-turn").css("background-color"));
-  console.log($("#chal-turn").css("background-color"))
+  
   if ($("#koh-turn").css("background-color") === "rgb(240, 230, 140)") {
-    console.log("HERE");
     $("#chal-turn").css("background-color", "rgb(240, 230, 140)");
     $("#koh-turn").css("background-color", "rgb(128, 128, 128)");
   } else if ($("#koh-turn").css("background-color") === "rgb(128, 128, 128)") {
-    console.log("HERE1");
     $("#chal-turn").css("background-color", "rgb(128, 128, 128)");
     $("#koh-turn").css("background-color", "rgb(240, 230, 140)");
-  }
-
-  console.log("HE" + $("#koh-poke-img").attr("src"));
-  console.log("HER" + $("#chal-poke-img").attr("src"));
-  
+  }  
 
   if ($("#koh-poke-img").attr("src") === "../images/bulbgif.gif") {
     $("#koh-poke-img").attr("src", "../images/bulbbackgif.gif");
@@ -147,9 +140,7 @@ function assignPlayer() {
       $("#wins1").text("Wins: " + playerWins);
       $("#prof-pic1").attr("src", profilePic);
 
-      console.log(profilePoke);
-      //$("#koh-poke-img").attr("src,")
-
+    
       if ((profilePoke === 1)) {
         $("#koh-poke-img").attr("src", "../images/bulbgif.gif");
       } else if ((profilePoke === 2)) {
