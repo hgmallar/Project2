@@ -41,55 +41,6 @@ function updateState() {
     $("#koh-turn").css("background-color", "rgb(240, 230, 140)");
   }  
 
-  if ($("#koh-poke-img").attr("src") === "../images/bulbgif.gif") {
-    $("#koh-poke-img").attr("src", "../images/bulbbackgif.gif");
-  }
-  else if ($("#koh-poke-img").attr("src") === "../images/bulbbackgif.gif") {
-    $("#koh-poke-img").attr("src", "../images/bulbgif.gif");
-  }
-  else if ($("#koh-poke-img").attr("src") === "../images/charmgif.gif") {
-    $("#koh-poke-img").attr("src", "../images/charmbackgif.gif");
-  }
-  else if ($("#koh-poke-img").attr("src") === "../images/charmbackgif.gif") {
-    $("#koh-poke-img").attr("src", "../images/charmgif.gif");
-  }
-  else if ($("#koh-poke-img").attr("src") === "../images/squirtlegif.gif") {
-    $("#koh-poke-img").attr("src", "../images/squirtleback.gif");
-  }
-  else if ($("#koh-poke-img").attr("src") === "../images/squirtleback.gif") {
-    $("#koh-poke-img").attr("src", "../images/squirtlegif.gif");
-  }
-  else if ($("#koh-poke-img").attr("src") === "../images/pikagif.gif") {
-    $("#koh-poke-img").attr("src", "../images/pikabackgif.gif");
-  }
-  else if ($("#koh-poke-img").attr("src") === "../images/pikabackgif.gif") {
-    $("#koh-poke-img").attr("src", "../images/pikagif.gif");
-  }
-  if ($("#chal-poke-img").attr("src") === "../images/bulbgif.gif") {
-    $("#chal-poke-img").attr("src", "../images/bulbbackgif.gif");
-  }
-  else if ($("#chal-poke-img").attr("src") === "../images/bulbbackgif.gif") {
-    $("#chal-poke-img").attr("src", "../images/bulbgif.gif");
-  }
-  else if ($("#chal-poke-img").attr("src") === "../images/charmgif.gif") {
-    $("#chal-poke-img").attr("src", "../images/charmbackgif.gif");
-  }
-  else if ($("#chal-poke-img").attr("src") === "../images/charmbackgif.gif") {
-    $("#chal-poke-img").attr("src", "../images/charmgif.gif");
-  }
-  else if ($("#chal-poke-img").attr("src") === "../images/squirtlegif.gif") {
-    $("#chal-poke-img").attr("src", "../images/squirtleback.gif");
-  }
-  else if ($("#chal-poke-img").attr("src") === "../images/squirtleback.gif") {
-    $("#chal-poke-img").attr("src", "../images/squirtlegif.gif");
-  }
-  else if ($("#chal-poke-img").attr("src") === "../images/pikagif.gif") {
-    $("#chal-poke-img").attr("src", "../images/pikabackgif.gif");
-  }
-  else if ($("#chal-poke-img").attr("src") === "../images/pikabackgif.gif") {
-    $("#chal-poke-img").attr("src", "../images/pikagif.gif");
-  }
-
 }
 
 function pokeImg(profpoke1, profpoke2) {
