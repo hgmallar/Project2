@@ -165,7 +165,7 @@ $(document).ready(function() {
       password: $("#new-password-input")
         .val()
         .trim(),
-      imageUrl: $("#user-pic")
+      profileUrl: $("#user-pic")
         .val()
         .trim(),
       userPokemon: $("input[name=radAnswer]:checked").val(),
