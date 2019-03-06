@@ -12,111 +12,113 @@
       <h1> Tic-Tac-Toe!</h1>
     </div>
   </div>
+  <img style="height:155px;display:block;margin-top:-35px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" src="/images/pokemonedition.png"
+    alt="nahh" />
 
-  <div class="user-input">
-    <form id="login" action="POST">
-      <div class="main-user-momma">
-        <div class="form-group mainuserinput">
-          <label for="username-input">Username:</label>
-          <input type="text" id="username-input" class="form-control" placeholder="Username">
+  <div class=" user-input ">
+    <form id="login " action="POST ">
+      <div class="main-user-momma ">
+        <div class="form-group mainuserinput ">
+          <label for="username-input ">Username:</label>
+          <input type="text " id="username-input " class="form-control " placeholder="Username ">
         </div>
-        <div class="form-group mainuserinput">
-          <label for="password-input">Password:</label>
-          <input type="password" id="password-input" class="form-control" placeholder="Password"></input>
+        <div class="form-group mainuserinput ">
+          <label for="password-input ">Password:</label>
+          <input type="password " id="password-input " class="form-control " placeholder="Password "></input>
         </div>
         <br>
-        <div class="s-info">
-          <a href="#" id="first-time">First time here?</a>
-          <button id="usr-submit" class="btn btn-primary float-right">Submit</button>
+        <div class="s-info ">
+          <a href="# " id="first-time ">First time here?</a>
+          <button id="usr-submit " class="btn btn-primary float-right ">Submit</button>
         </div>
       </div>
     </form>
     <!-- new user-->
-    <form id="newuser" style="display: none;" action="POST">
-      <div class="new-user-momma">
-        <div class="newuserinput mainuserinput">
-          <label for="new-username-input">Username:</label>
-          <input type="text" id="new-username-input" class="form-control" placeholder="Username">
+    <form id="newuser " style="display: none; " action="POST ">
+      <div class="new-user-momma ">
+        <div class="newuserinput mainuserinput ">
+          <label for="new-username-input ">Username:</label>
+          <input type="text " id="new-username-input " class="form-control " placeholder="Username ">
         </div>
-        <div class="newpassinput mainuserinput">
-          <label for="new-password-input">Password:</label>
-          <input type="password" id="new-password-input" class="form-control" placeholder="Password"></input>
-        </div>
-
-        <div class="newprofinput">
-          <label for="user-pic">Profile Picture:</label>
-          <input type="text" id="user-pic" class="form-control" placeholder="Image URL"></input>
+        <div class="newpassinput mainuserinput ">
+          <label for="new-password-input ">Password:</label>
+          <input type="password " id="new-password-input " class="form-control " placeholder="Password "></input>
         </div>
 
-        <div id="poke-select">
-          <label for="pokemon">Choose Your Companion:</label>
-          <div class="poke-choices">
-            <div class="poke-choice">
-              <img class="poke-img" src="/images/bulbgif.gif" />
-              <input type="radio" name="radAnswer" value="1" />
+        <div class="newprofinput ">
+          <label for="image-url ">Profile Picture:</label>
+          <input type="text " id="user-pic " class="form-control " placeholder="Image URL "></input>
+        </div>
+
+        <div id="poke-select ">
+          <label for="pokemon ">Choose Your Companion:</label>
+          <div class="poke-choices ">
+            <div class="poke-choice ">
+              <img class="poke-img " src="/images/bulbgif.gif " />
+              <input type="radio " name="radAnswer " value="1 " />
             </div>
-            <div class="poke-choice">
-              <img class="poke-img" src="/images/charmgif.gif" />
-              <input type="radio" name="radAnswer" value="2" />
+            <div class="poke-choice ">
+              <img class="poke-img " src="/images/charmgif.gif " />
+              <input type="radio " name="radAnswer " value="2 " />
             </div>
-            <div class="poke-choice">
-              <img class="poke-img" src="/images/squirtlegif.gif" />
-              <input type="radio" name="radAnswer" value="3" />
+            <div class="poke-choice ">
+              <img class="poke-img " src="/images/squirtlegif.gif " />
+              <input type="radio " name="radAnswer " value="3 " />
             </div>
-            <div class="poke-choice">
-              <img class="poke-img" src="/images/pikagif.gif" />
-              <input type="radio" name="radAnswer" value="4" />
+            <div class="poke-choice ">
+              <img class="poke-img " src="/images/pikagif.gif " />
+              <input type="radio " name="radAnswer " value="4 " />
             </div>
           </div>
         </div>
 
         <br>
-        <div class="login-info">
-          <a href="#" id="already">Already been here?</a>
-          <button id="new-usr-submit" class="btn btn-primary float-right">Submit</button>
+        <div class="login-info ">
+          <a href="# " id="already ">Already been here?</a>
+          <button id="new-usr-submit " class="btn btn-primary float-right ">Submit</button>
         </div>
       </div>
     </form>
 
   </div>
 </div>
-<div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Error!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+<div class="modal " tabindex="-1 " role="dialog ">
+  <div class="modal-dialog " role="document ">
+    <div class="modal-content ">
+      <div class="modal-header ">
+        <h5 class="modal-title ">Error!</h5>
+        <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
+          <span aria-hidden="true ">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <p id="modal-text"></p>
+      <div class="modal-body ">
+        <p id="modal-text "></p>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <div class="modal-footer ">
+        <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
       </div>
     </div>
   </div>
 </div>
-<div id="chart"><canvas class="mx-auto" id="myChart"></canvas></div>
+<div id="chart "><canvas class="mx-auto " id="myChart "></canvas></div>
 
 {{!--
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/index.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+<script type="text/javascript " src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js "></script> --}}
+<script src="/socket.io/socket.io.js "></script>
+<script src="/js/index.js "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js "></script>
 
 <!--chart.js horizontal bar graph-->
 {{!--
 <script>
-  var ctx = document.getElementById("myChart").getContext('2d');
+  var ctx = document.getElementById("myChart ").getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'horizontalBar',
     responsive: true,
     data: {
       labels: [
         {{ #each leaders }} 
-           "{{this}}",
+           "{{this}} ",
         {{/ each}}
       ],
   datasets: [{
@@ -145,7 +147,7 @@
     },
     title: {
       display: true,
-        text: "Leaderboard:",
+        text: "Leaderboard: ",
           fontSize: 20
     },
     scales: {
